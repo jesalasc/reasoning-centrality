@@ -1,0 +1,102 @@
+BN:
+  EPS: 1.0e-05
+  MOM: 0.1
+  NUM_SAMPLES_PRECISE: 1024
+  USE_PRECISE_STATS: true
+  ZERO_INIT_FINAL_GAMMA: false
+CFG_DEST: config.yaml
+CUDNN:
+  BENCHMARK: false
+DATA_LOADER:
+  NUM_WORKERS: 4
+  PIN_MEMORY: true
+DIST_BACKEND: nccl
+EFFICIENT_NET:
+  ACT_FUN: swish
+  DC_IMP: tf
+  DC_RATIO: 0.0
+  DEPTHS: []
+  DROPOUT_RATIO: 0.0
+  EXP_RATIOS: []
+  HEAD_TYPE: conv_head
+  HEAD_W: 1280
+  KERNELS: []
+  LIN_PROJ: true
+  SE_ENABLED: true
+  SE_RATIO: 0.25
+  STEM_W: 32
+  STRIDES: []
+  WIDTHS: []
+HOST: localhost
+LOG_DEST: stdout
+LOG_PERIOD: 10
+MEM:
+  RELU_INPLACE: true
+MODEL:
+  DEPTH: 0
+  LAYERS: 3
+  LOSS_FUN: cross_entropy
+  NUM_CLASSES: 10
+  TYPE: mlpnet
+NUM_GPUS: 1
+ONLINE_FLOPS: false
+OPTIM:
+  BASE_LR: 0.1
+  DAMPENING: 0.0
+  GAMMA: 0.1
+  LR_MULT: 0.1
+  LR_POLICY: cos
+  MAX_EPOCH: 200
+  MOMENTUM: 0.9
+  NESTEROV: true
+  STEPS: []
+  STEP_SIZE: 1
+  WARMUP_EPOCHS: 0
+  WARMUP_FACTOR: 0.1
+  WEIGHT_DECAY: 0.0005
+OUT_DIR: checkpoint/cifar10/mlp_cifar10/all/mlp_bs128_1gpu_layer3_transtalklinear_talkmodedense_num64_messagews_sparsity0.125_p0.00189_aggsum_graphseed0_starttrainseed1_endtrainseed6_keepTrue_add1x10_upperTrue_matchTrue_epoch200
+PORT: 12002
+RESNET:
+  APPEND1x1: 0
+  GROUP_SIZE: 2
+  NUM_GROUPS: 1
+  STRIDE_1X1: false
+  TRANS_FUN: talklinear_transform
+  WIDTH_PER_GROUP: 64
+RGRAPH:
+  ADD_1x1: 0
+  AGG_FUNC: sum
+  AUTO_MATCH: true
+  DIM_FIRST: 512
+  DIM_LIST:
+  - 512
+  DIRECTED: false
+  GROUP_NUM: 64
+  GROUP_SIZE: 1
+  KEEP_GRAPH: true
+  MESSAGE_TYPE: ws
+  P: 0.00189
+  SAVE_GRAPH: false
+  SEED_GRAPH: 0
+  SEED_TRAIN: 1
+  SEED_TRAIN_END: 6
+  SEED_TRAIN_START: 1
+  SPARSITY: 0.125
+  STEM_MODE: default
+  TALK_MODE: dense
+  UPPER: true
+RNG_SEED: 1
+TENSORBOARD: false
+TEST:
+  BATCH_SIZE: 100
+  DATASET: cifar10
+  SPLIT: test
+TRAIN:
+  AUTO_MATCH: true
+  AUTO_RESUME: false
+  BATCH_SIZE: 128
+  CHECKPOINT_PERIOD: 500
+  DATASET: cifar10
+  EVAL_PERIOD: 1
+  SPLIT: train
+  START_CHECKPOINT: ''
