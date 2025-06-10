@@ -7,7 +7,7 @@ path = "/Users/canonrobins/Documents/GitHub/DeepSeek-R1-Distill-Qwen-1.5B"
 model = AutoModelForCausalLM.from_pretrained(path, attn_implementation="eager").to(device)
 tokenizer = AutoTokenizer.from_pretrained(path)
 
-inputs = tokenizer("Given that a equals 2 and b equals 3, Calculate (a * b), give an exact numerical computation", return_tensors="pt")
+inputs = tokenizer("Given that 'a' equals 2 and 'b' equals 3, Calculate 'a' multiplied by 'b', give an exact numerical computation. Your answer should just be a one digit integer", return_tensors="pt")
 inputs = {k: v.to(model.device) for k, v in inputs.items()}
 outputs = model(**inputs, output_attentions=True)
 output_attentions = outputs.attentions
@@ -19,5 +19,5 @@ def print_weights(attentions, layer, batch_i, head_i):
 
 print_weights(output_attentions, 0, 0, 0)
 
-generated = model.generate(**inputs, max_new_tokens=400)
+generated = model.generate(**inputs, max_new_tokens=10000)
 print(f"Output: {tokenizer.decode(generated[0])}")
