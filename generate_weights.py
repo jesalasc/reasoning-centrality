@@ -40,7 +40,7 @@ def plot_weights(attentions, layer=0, batch_i=0, head_i=0):
 
     distributions = {"norm": stats.norm, "expon": stats.expon, "uniform": stats.uniform, "lognorm": stats.lognorm,
                      "gamma": stats.gamma, "weibull_min": stats.weibull_min, "pareto": stats.pareto, "genpareto": stats.genpareto,
-                     "genexpon": stats.genexpon, "gengamma": stats.gengamma}
+                     "genexpon": stats.genexpon, "gengamma": stats.gengamma, "t": stats.t}
 
     adjusted_vals = np.sqrt(log_weights[(log_weights > 0.01) & (log_weights < 0.683)])
     for dist, fx in distributions.items():
@@ -51,46 +51,46 @@ def plot_weights(attentions, layer=0, batch_i=0, head_i=0):
     # creating masked relational graph
 
     total_weights = flattened_vals.shape[0]
-    # threshold = 1/500 * total_weights
+    threshold = 1/500 * total_weights
 
-    # hist, bin_edges = np.histogram(log_weights, bins=bin_num)
-    # low_count_bins = np.where(hist < threshold)[0]
-    # low_ranges = set()
-    # for i in low_count_bins:
-    #     low_ranges.add((bin_edges[i], bin_edges[i+1]))
+    hist, bin_edges = np.histogram(log_weights, bins=bin_num)
+    low_count_bins = np.where(hist < threshold)[0]
+    low_ranges = set()
+    for i in low_count_bins:
+        low_ranges.add((bin_edges[i], bin_edges[i+1]))
 
-    # head_matrix = attentions[layer][batch_i, head_i]
-    # head_matrix_np = head_matrix.detach().cpu().numpy()
-    # log_matrix = np.log(head_matrix_np + 1)
-    # mask = np.zeros_like(head_matrix_np, dtype=bool)
+    head_matrix = attentions[layer][batch_i, head_i]
+    head_matrix_np = head_matrix.detach().cpu().numpy()
+    log_matrix = np.log(head_matrix_np + 1)
+    mask = np.zeros_like(head_matrix_np, dtype=bool)
 
-    # for i, (low, high) in enumerate(low_ranges):
-    #     if high == bin_edges[-1]:
-    #         mask |= (log_matrix >= low) & (log_matrix <= high)
-    #     else:
-    #         mask |= (log_matrix >= low) & (log_matrix < high)
+    for i, (low, high) in enumerate(low_ranges):
+        if high == bin_edges[-1]:
+            mask |= (log_matrix >= low) & (log_matrix <= high)
+        else:
+            mask |= (log_matrix >= low) & (log_matrix < high)
 
-    # seq_len = head_matrix.shape[0]
-    # G = nx.DiGraph()
+    seq_len = head_matrix.shape[0]
+    G = nx.DiGraph()
 
-    # for i in range(seq_len):
-    #     G.add_node(i)
+    for i in range(seq_len):
+        G.add_node(i)
 
-    # for i in range(seq_len):
-    #     for j in range(seq_len):
-    #         if mask[i, j]:
-    #             weight = head_matrix_np[i, j]
-    #             G.add_edge(i, j, weight=weight)
+    for i in range(seq_len):
+        for j in range(seq_len):
+            if mask[i, j]:
+                weight = head_matrix_np[i, j]
+                G.add_edge(i, j, weight=weight)
 
-    # pos = nx.circular_layout(G)
-    # nx.draw(G, pos, with_labels=True)
-    # labels = nx.get_edge_attributes(G, 'weight')
-    # nx.draw_networkx_edge_labels(G, pos, edge_labels={k: f"{v:.4e}" for k, v in labels.items()}, font_size=5)
-    # plt.title(f"Relational Graph at Layer {layer} and Head {head_i}")
-    # plt.show()
+    pos = nx.circular_layout(G)
+    nx.draw(G, pos, with_labels=True)
+    labels = nx.get_edge_attributes(G, 'weight')
+    nx.draw_networkx_edge_labels(G, pos, edge_labels={k: f"{v:.4e}" for k, v in labels.items()}, font_size=5)
+    plt.title(f"Relational Graph at Layer {layer} and Head {head_i}")
+    plt.show()
 
 
-# print_weights(output_attentions)
-# generated = model.generate(**inputs, max_new_tokens=150)
-# print(f"Output: {tokenizer.decode(generated[0])}")
+print_weights(output_attentions)
+generated = model.generate(**inputs, max_new_tokens=150)
+print(f"Output: {tokenizer.decode(generated[0])}")
 plot_weights(output_attentions)
