@@ -14,7 +14,7 @@ inputs = {k: v.to(model.device) for k, v in inputs.items()}
 outputs = model(**inputs, output_attentions=True)
 output_attentions = outputs.attentions
 
-def plot_weights(attentions, layer=0, batch_i=0, head_i=0):
+def create_graph(attentions, layer=0, batch_i=0, head_i=0, N=10, show_graph=False):
     # retrieving data
 
     layer_matrix = attentions[layer][batch_i]
@@ -22,21 +22,23 @@ def plot_weights(attentions, layer=0, batch_i=0, head_i=0):
 
     # creating masked relational graph
 
-    total_weights = flattened_vals.shape[0]
-
     head_matrix = attentions[layer][batch_i, head_i]
     head_matrix_np = head_matrix.detach().cpu().numpy()
 
     seq_len = head_matrix.shape[0]
     G = nx.DiGraph()
 
-    for i in range(seq_len):
+    token_to_node = {i: i % N for i in range(seq_len)}
+
+    for i in range(min(seq_len, N)):
         G.add_node(i)
 
     for i in range(seq_len):
         for j in range(seq_len):
             weight = head_matrix_np[i, j]
-            G.add_edge(i, j, weight=weight)
+            start_node = token_to_node[i]
+            end_node = token_to_node[j]
+            G.add_edge(start_node, end_node, weight=weight)
 
     def backbone_filter(G, threshold=0.05):
         backbone = nx.Graph()
@@ -55,13 +57,16 @@ def plot_weights(attentions, layer=0, batch_i=0, head_i=0):
 
     backbone_G = backbone_filter(G)
 
-    pos = nx.circular_layout(backbone_G)
-    nx.draw(backbone_G, pos, with_labels=True)
-    labels = nx.get_edge_attributes(backbone_G, 'weight')
-    nx.draw_networkx_edge_labels(backbone_G, pos, edge_labels={k: f"{v:.4e}" for k, v in labels.items()}, font_size=5)
-    plt.title(f"Relational Graph at Layer {layer} and Head {head_i}")
-    plt.show()
-    print(f"Num_edges: {backbone_G.number_of_edges()}")
-    print(f"Num_edgesin complete graph: {seq_len * seq_len}")
+    if show_graph:
+        pos = nx.circular_layout(backbone_G)
+        nx.draw(backbone_G, pos, with_labels=True)
+        labels = nx.get_edge_attributes(backbone_G, 'weight')
+        nx.draw_networkx_edge_labels(backbone_G, pos, edge_labels={k: f"{v:.4e}" for k, v in labels.items()}, font_size=5)
+        plt.title(f"Relational Graph at Layer {layer} and Head {head_i}")
+        plt.show()
+        print(f"Num_edges: {backbone_G.number_of_edges()}")
+        print(f"Num_edgesin complete graph: {seq_len * seq_len}")
 
-plot_weights(output_attentions)
+    return backbone_G
+
+create_graph(output_attentions)
