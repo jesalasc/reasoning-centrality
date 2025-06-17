@@ -36,18 +36,6 @@ def plot_weights(attentions, layer=0, batch_i=0, head_i=0):
     plt.grid(True)
     plt.show()
 
-    # goodness of fit test
-
-    distributions = {"norm": stats.norm, "expon": stats.expon, "uniform": stats.uniform, "lognorm": stats.lognorm,
-                     "gamma": stats.gamma, "weibull_min": stats.weibull_min, "pareto": stats.pareto, "genpareto": stats.genpareto,
-                     "genexpon": stats.genexpon, "gengamma": stats.gengamma, "t": stats.t}
-
-    adjusted_vals = np.sqrt(log_weights[(log_weights > 0.01) & (log_weights < 0.683)])
-    for dist, fx in distributions.items():
-        params = fx.fit(adjusted_vals)
-        stat, p_value = stats.kstest(adjusted_vals, dist, args=params)
-        print(f"{dist}: statistic={stat}, p={p_value}\n")
-
     # creating masked relational graph
 
     total_weights = flattened_vals.shape[0]
@@ -89,8 +77,20 @@ def plot_weights(attentions, layer=0, batch_i=0, head_i=0):
     plt.title(f"Relational Graph at Layer {layer} and Head {head_i}")
     plt.show()
 
+def gof_test(vals):
+    # goodness of fit test
+    distributions = {"norm": stats.norm, "expon": stats.expon, "uniform": stats.uniform, "lognorm": stats.lognorm,
+                     "gamma": stats.gamma, "weibull_min": stats.weibull_min, "pareto": stats.pareto, "genpareto": stats.genpareto,
+                     "genexpon": stats.genexpon, "gengamma": stats.gengamma, "t": stats.t}
 
-print_weights(output_attentions)
-generated = model.generate(**inputs, max_new_tokens=150)
-print(f"Output: {tokenizer.decode(generated[0])}")
+    adjusted_vals = np.sqrt(vals[(vals > 0.01) & (vals < 0.683)])
+    transformed_vals = stats.boxcox(adjusted_vals)[0]
+    for dist, fx in distributions.items():
+        params = fx.fit(transformed_vals)
+        stat, p_value = stats.kstest(transformed_vals, dist, args=params)
+        print(f"{dist}: statistic={stat}, p={p_value}\n")
+
+# print_weights(output_attentions)
+# generated = model.generate(**inputs, max_new_tokens=150)
+# print(f"Output: {tokenizer.decode(generated[0])}")
 plot_weights(output_attentions)
