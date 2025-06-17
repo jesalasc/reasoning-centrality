@@ -3,8 +3,6 @@ from transformers import AutoModelForCausalLM, AutoTokenizer
 import matplotlib.pyplot as plt
 import numpy as np
 import networkx as nx
-import scipy
-from scipy import stats
 
 device = "mps" if torch.backends.mps.is_available() else "cpu"
 path = "deepseek-ai/DeepSeek-R1-Distill-Qwen-1.5B"
