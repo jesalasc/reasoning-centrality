@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import networkx as nx
 
-def average_centrality(inputs, show_graphs=False, show_outputs=False, show_cents=False, layer=0, batch_i=0, head_i=0, N=10, cent_metric="betweenness"):
+def average_centrality(inputs, show_graphs=False, show_outputs=False, show_centrality=False, layer=0, batch_i=0, head_i=0, N=10, cent_metric="betweenness"):
     device = "mps" if torch.backends.mps.is_available() else "cpu"
     path = "deepseek-ai/DeepSeek-R1-Distill-Qwen-1.5B"
 
@@ -18,7 +18,7 @@ def average_centrality(inputs, show_graphs=False, show_outputs=False, show_cents
                     "harmonic": nx.harmonic_centrality,
                     "katz": nx.katz_centrality}
 
-    total_centrality = 0
+    centrality_vector = np.array([0]*N)
 
     for inp in inputs:
         tokenized_inputs = tokenizer(inp, return_tensors="pt")
@@ -51,7 +51,7 @@ def average_centrality(inputs, show_graphs=False, show_outputs=False, show_cents
             token_to_node = {i: i % N for i in range(seq_len)}
 
 
-            for i in range(min(N, seq_len)):
+            for i in range(N):
                 G.add_node(i)
 
             for i in range(seq_len):
@@ -76,16 +76,15 @@ def average_centrality(inputs, show_graphs=False, show_outputs=False, show_cents
 
         # centrality computation
 
-        def compute_centrality(G, metric="betweenness", show_cent=show_cents):
+        def compute_centrality(G, metric="betweenness", show_cent=show_centrality):
             node_centralities = cent_metrics[metric](G)
-            average = sum(node_centralities.values()) / len(node_centralities)
+            vector = np.array(list(node_centralities.values()))
             if show_cent:
-                print(f"Average {metric} centrality: {average}")
+                print(f"Centrality for input {inp}: {vector}")
+            return vector
 
-            return average
-
-        centrality = compute_centrality(graph, metric=cent_metric)
-        total_centrality += centrality
+        vector = compute_centrality(graph, metric=cent_metric)
+        centrality_vector = centrality_vector + vector
 
         # output handling
 
@@ -96,12 +95,11 @@ def average_centrality(inputs, show_graphs=False, show_outputs=False, show_cents
         if show_outputs:
             show_output_func()
 
-    final_average = total_centrality / len(inputs)
-    return final_average
+    final_vector = centrality_vector / len(inputs)
+    return final_vector
 
 inputs = []
 word_list = [
-    # Simple words (1-5 letters)
     "apple",
     "abracadabra",
     "alphabet",
@@ -116,4 +114,4 @@ word_list = [
 
 for word in word_list:
     inputs.append(f"Question: how many times does the letter a appear in the word {word}. Answer: ")
-print(average_centrality(inputs, N=20, show_graphs=True))
+print(f"Average centrality vector: \n{average_centrality(inputs, N=20, cent_metric="pagerank")}")
