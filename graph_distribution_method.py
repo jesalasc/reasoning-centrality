@@ -12,12 +12,12 @@ path = "deepseek-ai/DeepSeek-R1-Distill-Qwen-1.5B"
 model = AutoModelForCausalLM.from_pretrained(path, trust_remote_code=True, attn_implementation="eager").to(device)
 tokenizer = AutoTokenizer.from_pretrained(path, trust_remote_code=True)
 
-inputs = tokenizer("Question: Santiago is the capital city of Chile. What is the capital city of Chile? Answer:", return_tensors="pt")
+inputs = tokenizer("Information: Let's say that the variable a = 5, the variable b = 8, and the variable c = 22. Question: compute a multiplied by b multiplied by c. Answer:", return_tensors="pt")
 inputs = {k: v.to(model.device) for k, v in inputs.items()}
 outputs = model(**inputs, output_attentions=True)
 output_attentions = outputs.attentions
 
-def probability_graph_filter(attentions, layer=0, batch_i=0, head_i=0, N=30):
+def probability_graph_filter(attentions, layer=0, batch_i=0, head_i=0, N=10):
     # exracting layer values
 
     layer_matrix = attentions[layer][batch_i]
@@ -40,7 +40,7 @@ def probability_graph_filter(attentions, layer=0, batch_i=0, head_i=0, N=30):
     token_to_node = {i: i % N for i in range(seq_len)}
 
 
-    for i in range(N):
+    for i in range(min(N, seq_len)):
         G.add_node(i)
 
     for i in range(seq_len):
@@ -58,4 +58,27 @@ def probability_graph_filter(attentions, layer=0, batch_i=0, head_i=0, N=30):
     plt.title(f"Relational Graph at Layer {layer} and Head {head_i}")
     plt.show()
 
-probability_graph_filter(output_attentions)
+    return G
+
+graph = probability_graph_filter(output_attentions)
+
+cent_metrics = {"betweenness": nx.betweenness_centrality,
+                "eigenvector": nx.eigenvector_centrality,
+                "pagerank": nx.pagerank,
+                "degree": nx.degree_centrality,
+                "harmonic": nx.harmonic_centrality}
+
+def compute_centrality(G, metric="betweenness"):
+    node_centralities = cent_metrics[metric](G)
+    average = sum(node_centralities.values()) / len(node_centralities)
+    print(f"Average {metric} centrality: {average}")
+
+    return average
+
+centrality = compute_centrality(graph, metric="pagerank")
+
+def show_output():
+    generated = model.generate(**inputs, max_new_tokens=150)
+    print(f"Output: {tokenizer.decode(generated[0])}")
+
+# show_output()
