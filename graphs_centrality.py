@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import networkx as nx
 
-def average_centrality(inputs, show_graphs=False, show_outputs=False, show_cents=False, layer=0, batch_i=0, head_i=0, N=10):
+def average_centrality(inputs, show_graphs=False, show_outputs=False, show_cents=False, layer=0, batch_i=0, head_i=0, N=10, cent_metric="betweenness"):
     device = "mps" if torch.backends.mps.is_available() else "cpu"
     path = "deepseek-ai/DeepSeek-R1-Distill-Qwen-1.5B"
 
@@ -84,13 +84,13 @@ def average_centrality(inputs, show_graphs=False, show_outputs=False, show_cents
 
             return average
 
-        centrality = compute_centrality(graph, metric="pagerank")
+        centrality = compute_centrality(graph, metric=cent_metric)
         total_centrality += centrality
 
         # output handling
 
         def show_output_func():
-            generated = model.generate(**inputs, max_new_tokens=150)
+            generated = model.generate(**tokenized_inputs, max_new_tokens=30)
             print(f"Output: {tokenizer.decode(generated[0])}")
 
         if show_outputs:
@@ -98,3 +98,22 @@ def average_centrality(inputs, show_graphs=False, show_outputs=False, show_cents
 
     final_average = total_centrality / len(inputs)
     return final_average
+
+inputs = []
+word_list = [
+    # Simple words (1-5 letters)
+    "apple",
+    "abracadabra",
+    "alphabet",
+    "papaya",
+    "extravaganza",
+    "authoritarian",
+    "zebra",
+    "aaaaa",
+    "AmAzInG",
+    "qapla'"
+]
+
+for word in word_list:
+    inputs.append(f"Question: how many times does the letter a appear in the word {word}. Answer: ")
+print(average_centrality(inputs, N=20, show_graphs=True))
