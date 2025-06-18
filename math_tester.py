@@ -25,7 +25,6 @@ def average_centrality(inputs, show_graphs=False, show_outputs=False, show_centr
 
     if show_outputs or show_performance:
         output_tracker = []
-        none_tracker = 0
 
     for inp in inputs:
         tokenized_inputs = tokenizer(inp, return_tensors="pt")
@@ -109,55 +108,45 @@ def average_centrality(inputs, show_graphs=False, show_outputs=False, show_centr
         # output handling
 
         def show_output_func():
-            nonlocal none_tracker
             generated = model.generate(**tokenized_inputs, max_new_tokens=350, do_sample=False, temperature=0)
             generated_tokens = generated[0][tokenized_inputs['input_ids'].shape[1]:]
             output = tokenizer.decode(generated_tokens, skip_special_tokens=True)
 
             k_tokens = generated_tokens[:20]
             k_tokens_decoded = tokenizer.decode(k_tokens, skip_special_tokens=True).lower()
-            if "yes" in k_tokens_decoded:
-                output_tracker.append("yes")
-            elif "no" in k_tokens_decoded:
-                output_tracker.append("no")
-            else:
-                output_tracker.append("none")
-                none_tracker += 1
+            output_tracker.append(k_tokens_decoded)
             if show_outputs:
                 print(f"\n\nInput: {inp}")
-                print(f"\n\nOutput: {output}\n\n")
+                print(f"Output: {output}\n\n")
 
         if show_outputs or show_performance:
             show_output_func()
 
-    def check_accuracy(tracker, answers, none_tracker):
+    def check_accuracy(tracker, answers):
         tracker = np.array(tracker)
         answers = np.array(answers)
 
-        correct = np.sum(answers == tracker)
-        return (correct / len(answers), none_tracker / len(answers))
+        correct = np.sum([ans in track for ans, track in zip(answers, tracker)])
+        return correct / len(answers)
 
     if show_performance:
-        accuracy, unknown = check_accuracy(output_tracker, ans_list, none_tracker)
-        print(f"Accuracy is {accuracy}\nRate of unknown performance is {unknown}")
+        accuracy = check_accuracy(output_tracker, ans_list)
+        print(f"Accuracy is {accuracy}\n")
 
     final_vector = centrality_vector / len(inputs)
     return final_vector
 
 inputs = []
-words_set = set()
-while len(words_set) <= 5:
-    words = random.choices("abc", weights=[3,1,1], k=5)
-    words_set.add(",".join(words))
+nums_set = set()
+while len(nums_set) <= 5:
+    nums = random.choices("01234567", k=2)
+    nums_set.add("".join(nums))
 
 ans_list = []
 
-for sequence in words_set:
-    inputs.append(f"Question: Is 'a' the majority element in the following sequence '{sequence}'. Respond with 'yes' or 'no'.\nAnswer: ")
-    if sequence.count("a") >= 3:
-        ans_list.append("yes")
-    else:
-        ans_list.append("no")
+for num in nums_set:
+    inputs.append(f"Question: What is the answer to 12 + '{num}'. Respond with the corresponding two digit number.\nAnswer: ")
+    ans_list.append(str(12 + int(num)))
 
 
 print(f"Average centrality vector: \n{average_centrality(inputs, N=50, cent_metric="katz", show_performance=True, show_outputs=True)}")
