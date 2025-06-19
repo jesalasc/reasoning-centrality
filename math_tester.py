@@ -4,6 +4,8 @@ import matplotlib.pyplot as plt
 import numpy as np
 import networkx as nx
 import random
+import gc
+import re
 
 np.set_printoptions(formatter={"float": "{:.4f}".format})
 
@@ -11,7 +13,7 @@ def average_centrality(inputs, show_graphs=False, show_outputs=False, show_centr
     device = "mps" if torch.backends.mps.is_available() else "cpu"
     path = "google/gemma-2-2b-it"
 
-    model = AutoModelForCausalLM.from_pretrained(path, trust_remote_code=True, attn_implementation="eager").to(device)
+    model = AutoModelForCausalLM.from_pretrained(path, trust_remote_code=True, attn_implementation="eager", low_cpu_mem_usage=True).to(device)
     tokenizer = AutoTokenizer.from_pretrained(path, trust_remote_code=True)
 
     cent_metrics = {"betweenness": nx.betweenness_centrality,
@@ -35,7 +37,7 @@ def average_centrality(inputs, show_graphs=False, show_outputs=False, show_centr
         # creating graph
 
         def create_graph(attentions):
-            # exracting layer values
+            # extracting layer values
 
             layer_matrix = attentions[layer][batch_i]
             flattened_vals = layer_matrix.flatten().detach().cpu().numpy()
@@ -50,6 +52,7 @@ def average_centrality(inputs, show_graphs=False, show_outputs=False, show_centr
             log_matrix = np.log(head_matrix_np + 1)
 
             mask = log_matrix >= threshold
+            attention_layer = model.model.layers[layer].self_attn
 
             seq_len = head_matrix.shape[0]
             G = nx.MultiDiGraph()
@@ -112,7 +115,7 @@ def average_centrality(inputs, show_graphs=False, show_outputs=False, show_centr
             generated_tokens = generated[0][tokenized_inputs['input_ids'].shape[1]:]
             output = tokenizer.decode(generated_tokens, skip_special_tokens=True)
 
-            k_tokens = generated_tokens[:20]
+            k_tokens = generated_tokens[:10]
             k_tokens_decoded = tokenizer.decode(k_tokens, skip_special_tokens=True).lower()
             output_tracker.append(k_tokens_decoded)
             if show_outputs:
@@ -126,7 +129,11 @@ def average_centrality(inputs, show_graphs=False, show_outputs=False, show_centr
         tracker = np.array(tracker)
         answers = np.array(answers)
 
-        correct = np.sum([ans in track for ans, track in zip(answers, tracker)])
+        def is_correct(ans, track):
+            pattern = r"(?<!\d)" + re.escape(ans) + r"(?!\d)"
+            return bool(re.search(pattern, track))
+
+        correct = np.sum([is_correct(ans, track) for ans, track in zip(answers, tracker)])
         return correct / len(answers)
 
     if show_performance:
@@ -139,14 +146,15 @@ def average_centrality(inputs, show_graphs=False, show_outputs=False, show_centr
 inputs = []
 nums_set = set()
 while len(nums_set) <= 5:
-    nums = random.choices("01234567", k=2)
+    nums = random.choices("0123456789", k=3)
     nums_set.add("".join(nums))
 
 ans_list = []
 
 for num in nums_set:
-    inputs.append(f"Question: What is the answer to 12 + '{num}'. Respond with the corresponding two digit number.\nAnswer: ")
-    ans_list.append(str(12 + int(num)))
+    inputs.append(f"Question: What is the answer to 189 + {num}. Respond with the corresponding three of four digit number.\nAnswer: ")
+    ans_list.append(f"{str(189 + int(num))}")
 
 
-print(f"Average centrality vector: \n{average_centrality(inputs, N=50, cent_metric="katz", show_performance=True, show_outputs=True)}")
+print(f"Average centrality vector: \n{average_centrality(inputs, N=5, cent_metric="katz", show_performance=True, show_outputs=True, show_graphs=False)}")
+gc.collect()
