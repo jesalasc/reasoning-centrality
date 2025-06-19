@@ -111,7 +111,7 @@ def average_centrality(inputs, show_graphs=False, show_outputs=False, show_centr
         # output handling
 
         def show_output_func():
-            generated = model.generate(**tokenized_inputs, max_new_tokens=350, do_sample=False, temperature=0)
+            generated = model.generate(**tokenized_inputs, max_new_tokens=50, do_sample=False, temperature=0)
             generated_tokens = generated[0][tokenized_inputs['input_ids'].shape[1]:]
             output = tokenizer.decode(generated_tokens, skip_special_tokens=True)
 
@@ -145,7 +145,7 @@ def average_centrality(inputs, show_graphs=False, show_outputs=False, show_centr
 
 inputs = []
 nums_set = set()
-while len(nums_set) <= 5:
+while len(nums_set) < 5:
     nums = random.choices("0123456789", k=3)
     nums_set.add("".join(nums))
 
@@ -156,5 +156,5 @@ for num in nums_set:
     ans_list.append(f"{str(189 + int(num))}")
 
 
-print(f"Average centrality vector: \n{average_centrality(inputs, N=5, cent_metric="katz", show_performance=True, show_outputs=True, show_graphs=False)}")
+print(f"Average centrality vector: \n{average_centrality(inputs, N=33, cent_metric="katz", show_performance=False, show_outputs=False, show_graphs=True, show_centrality=True)}")
 gc.collect()

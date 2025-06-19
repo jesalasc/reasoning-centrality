@@ -7,20 +7,20 @@ import random
 
 np.set_printoptions(formatter={"float": "{:.4f}".format})
 
+device = "mps" if torch.backends.mps.is_available() else "cpu"
+path = "google/gemma-2-2b-it"
+
+model = AutoModelForCausalLM.from_pretrained(path, trust_remote_code=True, attn_implementation="eager").to(device)
+tokenizer = AutoTokenizer.from_pretrained(path, trust_remote_code=True)
+
+cent_metrics = {"betweenness": nx.betweenness_centrality,
+                "eigenvector": nx.eigenvector_centrality,
+                "pagerank": nx.pagerank,
+                "harmonic": nx.harmonic_centrality,
+                "katz": nx.katz_centrality}
+
+
 def average_centrality(inputs, show_graphs=False, show_outputs=False, show_centrality=False, layer=0, batch_i=0, head_i=0, N=10, cent_metric="betweenness", show_performance=False):
-    device = "mps" if torch.backends.mps.is_available() else "cpu"
-    path = "google/gemma-2-2b-it"
-
-    model = AutoModelForCausalLM.from_pretrained(path, trust_remote_code=True, attn_implementation="eager").to(device)
-    tokenizer = AutoTokenizer.from_pretrained(path, trust_remote_code=True)
-
-    cent_metrics = {"betweenness": nx.betweenness_centrality,
-                    "eigenvector": nx.eigenvector_centrality,
-                    "pagerank": nx.pagerank,
-                    "degree": nx.degree_centrality,
-                    "harmonic": nx.harmonic_centrality,
-                    "katz": nx.katz_centrality}
-
     centrality_vector = np.array([0]*N)
 
     if show_outputs or show_performance:
@@ -110,11 +110,11 @@ def average_centrality(inputs, show_graphs=False, show_outputs=False, show_centr
 
         def show_output_func():
             nonlocal none_tracker
-            generated = model.generate(**tokenized_inputs, max_new_tokens=350, do_sample=False, temperature=0)
+            generated = model.generate(**tokenized_inputs, max_new_tokens=50, do_sample=False)
             generated_tokens = generated[0][tokenized_inputs['input_ids'].shape[1]:]
             output = tokenizer.decode(generated_tokens, skip_special_tokens=True)
 
-            k_tokens = generated_tokens[:20]
+            k_tokens = generated_tokens[:10]
             k_tokens_decoded = tokenizer.decode(k_tokens, skip_special_tokens=True).lower()
             if "yes" in k_tokens_decoded:
                 output_tracker.append("yes")
@@ -146,7 +146,7 @@ def average_centrality(inputs, show_graphs=False, show_outputs=False, show_centr
 
 inputs = []
 words_set = set()
-while len(words_set) <= 5:
+while len(words_set) < 1:
     words = random.choices("abc", weights=[3,1,1], k=5)
     words_set.add(",".join(words))
 
@@ -160,4 +160,4 @@ for sequence in words_set:
         ans_list.append("no")
 
 
-print(f"Average centrality vector: \n{average_centrality(inputs, N=50, cent_metric="katz", show_performance=True, show_outputs=True)}")
+print(f"Average centrality vector: \n{average_centrality(inputs, N=38, cent_metric="katz", show_performance=False, show_outputs=True, show_graphs=True, head_i=5, layer=12)}")
