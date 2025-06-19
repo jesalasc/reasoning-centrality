@@ -40,7 +40,7 @@ def create_graph(attentions, layer=0, batch_i=0, head_i=0, N=10, show_graph=Fals
             end_node = token_to_node[j]
             G.add_edge(start_node, end_node, weight=weight)
 
-    def backbone_filter(G, threshold=0.05):
+    def backbone_filter(G, threshold=0.01):
         backbone = nx.Graph()
         for node in G.nodes():
             connected_nodes = list(G[node])
