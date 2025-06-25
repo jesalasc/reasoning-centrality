@@ -11,7 +11,7 @@ model = AutoModelForCausalLM.from_pretrained(path, trust_remote_code=True, attn_
 tokenizer = AutoTokenizer.from_pretrained(path, trust_remote_code=True)
 
 # Input text
-input_text = "Question: Is 'a' the majority element in the following sequence 'a,a,b,a,c'? Respond with 'yes' or 'no'.\nAnswer: "
+input_text = "Question: Is 'a' the majority element in the following sequence 'a,a,b,a,a'? Respond with 'yes' or 'no'.\nAnswer: "
 tokenized_inputs = tokenizer(input_text, return_tensors="pt").to(device)
 
 # Forward pass
@@ -32,7 +32,7 @@ fig_width = num_layers * 2  # Adjust for compact width
 fig, axs = plt.subplots(num_heads, num_layers, figsize=(fig_width, fig_height))
 plt.subplots_adjust(hspace=0.5, wspace=0.5)
 
-backbone = True
+backbone = False
 # Plot loop
 for layer in range(num_layers):
     if backbone:
@@ -114,4 +114,4 @@ for layer in range(num_layers):
 
 plt.suptitle("Attention Graphs by Layer and Head", fontsize=10)
 plt.tight_layout()
-plt.savefig("attention_graphs_backbone.pdf", bbox_inches="tight")
+plt.savefig("attention_graphs_percentile_true.pdf", bbox_inches="tight")
