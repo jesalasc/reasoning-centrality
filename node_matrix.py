@@ -10,7 +10,7 @@ import os
 
 
 device = "mps" if torch.backends.mps.is_available() else "cpu"
-path = "google/gemma-2-2b-it"
+path = "meta-llama/Llama-3.2-1B-Instruct"
 
 model = AutoModelForCausalLM.from_pretrained(path, attn_implementation="eager", trust_remote_code=True).to(device)
 tokenizer = AutoTokenizer.from_pretrained(path)
@@ -48,7 +48,7 @@ def load_data():
 inputs, answers = load_data()
 
 
-def store_graphs(inputs, answers, num_heads=8, N=38):
+def store_graphs(inputs, answers, num_heads=32):
     stored_graphs = defaultdict(lambda: defaultdict(dict))
     performance = []
 
@@ -66,6 +66,9 @@ def store_graphs(inputs, answers, num_heads=8, N=38):
 
         k_tokens = generated_tokens[:10]
         decoded_k = tokenizer.decode(k_tokens, skip_special_tokens=True).lower()
+
+        seq_len = attentions[0].shape[-1]
+        N = seq_len
 
         # evaluate prediction
 
@@ -113,9 +116,9 @@ def store_graphs(inputs, answers, num_heads=8, N=38):
 
                 stored_graphs[input_i][layer][head_i] = G
 
-    return stored_graphs, performance
+    return stored_graphs, performance, N
 
-def compute_centralities(stored_graphs, cent_metrics, num_inputs, num_heads=8, N=38, num_layers=26):
+def compute_centralities(stored_graphs, cent_metrics, num_inputs, num_heads=32, N=38, num_layers=16):
     res = {}
 
     for metric, fx in cent_metrics.items():
@@ -169,8 +172,8 @@ def save_performance_to_csv(inputs, answers, performance, filename="performance.
             writer.writerow([i, text, answer, correct])
 
 
-graphs, performance = store_graphs(inputs, answers)
-results = compute_centralities(graphs, cent_metrics, len(inputs))
+graphs, performance, N = store_graphs(inputs, answers)
+results = compute_centralities(graphs, cent_metrics, len(inputs), N=N)
 
 # Save everything
 for metric_name, matrix in results.items():
