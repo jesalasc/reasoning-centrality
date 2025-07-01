@@ -8,7 +8,9 @@ import random
 np.set_printoptions(formatter={"float": "{:.4f}".format})
 
 device = "mps" if torch.backends.mps.is_available() else "cpu"
-path = "google/gemma-2-2b-it"
+llama_path = "meta-llama/Llama-3.2-3B-Instruct"
+gemma_path = "google/gemma-2-2b-it"
+path = gemma_path
 
 model = AutoModelForCausalLM.from_pretrained(path, trust_remote_code=True, attn_implementation="eager").to(device)
 tokenizer = AutoTokenizer.from_pretrained(path, trust_remote_code=True)
@@ -146,7 +148,7 @@ def average_centrality(inputs, show_graphs=False, show_outputs=False, show_centr
 
 inputs = []
 words_set = set()
-while len(words_set) < 1:
+while len(words_set) < 10:
     words = random.choices("abc", weights=[3,1,1], k=5)
     words_set.add(",".join(words))
 
@@ -160,4 +162,4 @@ for sequence in words_set:
         ans_list.append("no")
 
 
-print(f"Average centrality vector: \n{average_centrality(inputs, N=38, cent_metric="katz", show_performance=False, show_outputs=True, show_graphs=True, head_i=5, layer=12)}")
+print(f"Average centrality vector: \n{average_centrality(inputs, N=38, cent_metric="katz", show_performance=False, show_outputs=True, show_graphs=False, head_i=5, layer=12)}")

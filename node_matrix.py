@@ -10,7 +10,9 @@ import os
 
 
 device = "mps" if torch.backends.mps.is_available() else "cpu"
-path = "meta-llama/Llama-3.2-1B-Instruct"
+llama_path = "meta-llama/Llama-3.2-3B-Instruct"
+gemma_path = "google/gemma-2-2b-it"
+path = "google/gemma-2-2b-it"
 
 model = AutoModelForCausalLM.from_pretrained(path, attn_implementation="eager", trust_remote_code=True).to(device)
 tokenizer = AutoTokenizer.from_pretrained(path)
@@ -23,19 +25,30 @@ cent_metrics = {
     "katz": nx.katz_centrality
 }
 
-inputs = []
-answers = []
-seen = set()
+# inputs = []
+# answers = []
+# seen = set()
+
+# while len(inputs) < 102:
+#     letters = random.choices("abc", weights=[100,1,1], k=5)
+#     sequence = ",".join(letters)
+#     if sequence in seen:
+#         continue
+#     seen.add(sequence)
+
+#     inputs.append(f"I will give you a sequence of 'a', 'b', and 'c' letters. I want you to tell me if 'a' is the most repeated letter in the sequence. For example, for the sequence 'a,c,b,a,a' you should answer yes. For the sequence 'a,c,b,c,a' you should answer no. Question: Is 'a' the majority element in the following sequence '{sequence}'.\nAnswer yes/no:")
+#     answers.append("yes" if sequence.count("a") >= 3 else "no")
 
 
-SAVE_PATH = 'abc_inputs.pkl'
 
-def save_data():
-    with open(SAVE_PATH, 'wb') as f:
-        pickle.dump({
-            'inputs': inputs,
-            'answers': answers,
-        }, f)
+SAVE_PATH = 'abc_inputs_even.pkl'
+
+# def save_data():
+#     with open(SAVE_PATH, 'wb') as f:
+#         pickle.dump({
+#             'inputs': inputs,
+#             'answers': answers,
+#         }, f)
 
 def load_data():
     with open(SAVE_PATH, 'rb') as f:
@@ -44,8 +57,10 @@ def load_data():
 
 # Uncomment to save
 # save_data()
+# print("saved")
 
 inputs, answers = load_data()
+tokens_lst = []
 
 
 def store_graphs(inputs, answers, num_heads=32):
@@ -56,6 +71,15 @@ def store_graphs(inputs, answers, num_heads=32):
         # get output
 
         tokenized = tokenizer(inp, return_tensors="pt")
+
+        tokens = tokenizer.convert_ids_to_tokens(tokenized['input_ids'][0])
+        # print("\n=== Token Breakdown ===")
+        # print(f"Input: {inp}")
+        # print("Tokens:")
+        # for i, token in enumerate(tokens):
+        #     print(f"{i}: {token}")
+        tokens_lst.append(tokens)
+
         tokenized = {k: v.to(model.device) for k, v in tokenized.items()}
         outputs = model(**tokenized, output_attentions=True)
         attentions = outputs.attentions
@@ -64,8 +88,9 @@ def store_graphs(inputs, answers, num_heads=32):
         generated_tokens = generated[0][tokenized['input_ids'].shape[1]:]
         output = tokenizer.decode(generated_tokens, skip_special_tokens=True)
 
-        k_tokens = generated_tokens[:10]
+        k_tokens = generated_tokens[:15]
         decoded_k = tokenizer.decode(k_tokens, skip_special_tokens=True).lower()
+        # print(f"answer: {answers[input_i]} chars: {decoded_k}")
 
         seq_len = attentions[0].shape[-1]
         N = seq_len
@@ -118,7 +143,7 @@ def store_graphs(inputs, answers, num_heads=32):
 
     return stored_graphs, performance, N
 
-def compute_centralities(stored_graphs, cent_metrics, num_inputs, num_heads=32, N=38, num_layers=16):
+def compute_centralities(stored_graphs, cent_metrics, num_inputs, num_heads=8, N=38, num_layers=26):
     res = {}
 
     for metric, fx in cent_metrics.items():
@@ -167,9 +192,9 @@ def save_node_matrix_to_csv(node_matrices, filename="node_centrality.csv"):
 def save_performance_to_csv(inputs, answers, performance, filename="performance.csv"):
     with open(filename, "w", newline="") as f:
         writer = csv.writer(f)
-        writer.writerow(["input_index", "input_text", "ground_truth", "correct"])
-        for i, (text, answer, correct) in enumerate(zip(inputs, answers, performance)):
-            writer.writerow([i, text, answer, correct])
+        writer.writerow(["input_index", "input_text", "ground_truth", "correct", "tokens"])
+        for i, (text, answer, correct, tokens) in enumerate(zip(inputs, answers, performance, tokens_lst)):
+            writer.writerow([i, text, answer, correct, tokens])
 
 
 graphs, performance, N = store_graphs(inputs, answers)

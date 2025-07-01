@@ -3,15 +3,16 @@ import numpy as np
 import matplotlib.pyplot as plt
 import networkx as nx
 from transformers import AutoModelForCausalLM, AutoTokenizer
+from matplotlib.backends.backend_pdf import PdfPages
 
 # Load model and tokenizer
 device = "mps" if torch.backends.mps.is_available() else "cpu"
-path = "google/gemma-2-2b-it"
+path = "google/gemma-2-2b"
 model = AutoModelForCausalLM.from_pretrained(path, trust_remote_code=True, attn_implementation="eager").to(device)
 tokenizer = AutoTokenizer.from_pretrained(path, trust_remote_code=True)
 
 # Input text
-input_text = "Question: Is 'a' the majority element in the following sequence 'a,a,b,a,a'? Respond with 'yes' or 'no'.\nAnswer: "
+input_text = "Given the recursive rule xn = xn-1 + xn-2, complete the following sequence: 0,1,1,2,3,"
 tokenized_inputs = tokenizer(input_text, return_tensors="pt").to(device)
 
 # Forward pass
@@ -20,10 +21,10 @@ with torch.no_grad():
 attentions = outputs.attentions
 
 # Parameters
-N = 38
 num_layers = len(attentions)
 num_heads = attentions[0].shape[1]
 seq_len = attentions[0].shape[-1]
+N = seq_len
 batch_i = 0
 
 fig_height = num_heads * 2  # Adjust for compact height
@@ -34,6 +35,37 @@ plt.subplots_adjust(hspace=0.5, wspace=0.5)
 
 backbone = False
 # Plot loop
+
+from matplotlib.backends.backend_pdf import PdfPages
+
+pdf_path = "matrix_backbone_0.01_recurse.pdf"
+
+with PdfPages(pdf_path) as pdf:
+    for layer in range(num_layers):
+        layer_attn = attentions[layer][0].flatten().detach().cpu().numpy()
+        layer_log = np.log(layer_attn)
+        threshold = np.percentile(layer_log, 95)
+
+        for head in range(num_heads):
+            head_attn = attentions[layer][0, head].detach().cpu().numpy()
+            head_log = np.log(head_attn)
+
+            mask = head_log >= threshold
+
+            fig, ax = plt.subplots(figsize=(6, 5))
+            cax = ax.imshow(head_log, cmap='viridis')
+            fig.colorbar(cax, ax=ax, label='Attention Weight')
+
+            ax.set_title(f"Attention Heatmap - Layer {layer}, Head {head}")
+            ax.set_xlabel("Key Token Index")
+            ax.set_ylabel("Query Token Index")
+            plt.tight_layout()
+
+            pdf.savefig(fig)   # Saves the current figure to the PDF
+            plt.close(fig)     # Closes the figure to save memory
+
+
+
 for layer in range(num_layers):
     if backbone:
         for head in range(num_heads):
@@ -87,11 +119,11 @@ for layer in range(num_layers):
             ax.set_axis_off()
     else:
         layer_attn = attentions[layer][0].flatten().detach().cpu().numpy()
-        layer_log = np.log(layer_attn + 1)
+        layer_log = np.log(layer_attn)
         threshold = np.percentile(layer_log, 95)
         for head in range(num_heads):
             head_attn = attentions[layer][0, head].detach().cpu().numpy()
-            head_log = np.log(head_attn + 1)
+            head_log = np.log(head_attn)
             mask = head_log >= threshold
 
             G = nx.MultiDiGraph()
@@ -114,4 +146,5 @@ for layer in range(num_layers):
 
 plt.suptitle("Attention Graphs by Layer and Head", fontsize=10)
 plt.tight_layout()
-plt.savefig("attention_graphs_percentile_true.pdf", bbox_inches="tight")
+plt.savefig("graph_backbone_0.01_recurse.pdf", bbox_inches="tight")
+print("done")
