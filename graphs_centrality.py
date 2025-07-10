@@ -9,10 +9,10 @@ np.set_printoptions(formatter={"float": "{:.4f}".format})
 
 device = "mps" if torch.backends.mps.is_available() else "cpu"
 llama_path = "meta-llama/Llama-3.2-3B-Instruct"
-gemma_path = "google/gemma-2-2b-it"
+gemma_path = "google/gemma-2-2b"
 path = gemma_path
 
-model = AutoModelForCausalLM.from_pretrained(path, trust_remote_code=True, attn_implementation="eager").to(device)
+model = AutoModelForCausalLM.from_pretrained(path, trust_remote_code=True).to(device)
 tokenizer = AutoTokenizer.from_pretrained(path, trust_remote_code=True)
 
 cent_metrics = {"betweenness": nx.betweenness_centrality,
@@ -30,7 +30,7 @@ def average_centrality(inputs, show_graphs=False, show_outputs=False, show_centr
         none_tracker = 0
 
     for inp in inputs:
-        tokenized_inputs = tokenizer(inp, return_tensors="pt")
+        tokenized_inputs = tokenizer(inp, return_tensors="pt", padding=True, add_special_tokens=True)
         tokenized_inputs = {k: v.to(model.device) for k, v in tokenized_inputs.items()}
         outputs = model(**tokenized_inputs, output_attentions=True)
         output_attentions = outputs.attentions
@@ -148,14 +148,15 @@ def average_centrality(inputs, show_graphs=False, show_outputs=False, show_centr
 
 inputs = []
 words_set = set()
-while len(words_set) < 10:
-    words = random.choices("abc", weights=[3,1,1], k=5)
-    words_set.add(",".join(words))
+# while len(words_set) < 10:
+#     words = random.choices("abc", weights=[3,1,1], k=5)
+#     words_set.add(",".join(words))
 
+words_set = {"a,a,a,a,a"}
 ans_list = []
 
 for sequence in words_set:
-    inputs.append(f"Question: Is 'a' the majority element in the following sequence '{sequence}'. Respond with 'yes' or 'no'.\nAnswer: ")
+    inputs.append(f"Question: Is 'a' the minority element in the following sequence '{sequence}'? Respond with 'yes' or 'no'.\nAnswer: ")
     if sequence.count("a") >= 3:
         ans_list.append("yes")
     else:

@@ -4,6 +4,7 @@ import matplotlib.pyplot as plt
 import networkx as nx
 from transformers import AutoModelForCausalLM, AutoTokenizer
 from matplotlib.backends.backend_pdf import PdfPages
+import math
 
 # Load model and tokenizer
 device = "mps" if torch.backends.mps.is_available() else "cpu"
@@ -36,33 +37,51 @@ plt.subplots_adjust(hspace=0.5, wspace=0.5)
 backbone = False
 # Plot loop
 
-from matplotlib.backends.backend_pdf import PdfPages
-
+layers_per_page = math.ceil(num_layers/8)
 pdf_path = "matrix_backbone_0.01_recurse.pdf"
 
+pages = math.ceil(num_layers / layers_per_page)
+
+pdf_path = "attention_matrix_8pages.pdf"
+
 with PdfPages(pdf_path) as pdf:
-    for layer in range(num_layers):
-        layer_attn = attentions[layer][0].flatten().detach().cpu().numpy()
-        layer_log = np.log(layer_attn)
-        threshold = np.percentile(layer_log, 95)
+    for page in range(pages):
+        start_layer = page * layers_per_page
+        end_layer = min(start_layer + layers_per_page, num_layers)
+        current_layers = end_layer - start_layer
 
-        for head in range(num_heads):
-            head_attn = attentions[layer][0, head].detach().cpu().numpy()
-            head_log = np.log(head_attn)
+        fig, axes = plt.subplots(nrows=num_heads, ncols=current_layers,
+                                 figsize=(current_layers * 2, num_heads * 2))
 
-            mask = head_log >= threshold
+        # If only one column, axes may be 1D; fix shape
+        if current_layers == 1:
+            axes = np.expand_dims(axes, axis=1)
 
-            fig, ax = plt.subplots(figsize=(6, 5))
-            cax = ax.imshow(head_log, cmap='viridis')
-            fig.colorbar(cax, ax=ax, label='Attention Weight')
+        for i, layer in enumerate(range(start_layer, end_layer)):
+            layer_attn = attentions[layer][0].flatten().detach().cpu().numpy()
+            threshold = np.percentile(layer_attn, 95)
 
-            ax.set_title(f"Attention Heatmap - Layer {layer}, Head {head}")
-            ax.set_xlabel("Key Token Index")
-            ax.set_ylabel("Query Token Index")
-            plt.tight_layout()
+            for head in range(num_heads):
+                ax = axes[head, i]
+                head_attn = attentions[layer][0, head].detach().cpu().numpy()
+                mask = head_attn >= threshold
 
-            pdf.savefig(fig)   # Saves the current figure to the PDF
-            plt.close(fig)     # Closes the figure to save memory
+                im = ax.imshow(head_attn, cmap='viridis', aspect='auto')
+                ax.axis('off')
+
+                if head == 0:
+                    ax.set_title(f"L{layer}", fontsize=8)
+                if i == 0:
+                    ax.set_ylabel(f"H{head}", fontsize=8, labelpad=8)
+
+        plt.subplots_adjust(wspace=0.1, hspace=0.1)
+        fig.suptitle(f"Attention Heatmaps (Layers {start_layer}–{end_layer - 1})", fontsize=14)
+
+        pdf.savefig(fig, dpi=600, bbox_inches='tight')
+        plt.close(fig)
+
+print(f"Saved multi-page PDF: {pdf_path}")
+
 
 
 
@@ -119,12 +138,12 @@ for layer in range(num_layers):
             ax.set_axis_off()
     else:
         layer_attn = attentions[layer][0].flatten().detach().cpu().numpy()
-        layer_log = np.log(layer_attn)
-        threshold = np.percentile(layer_log, 95)
+        # layer_log = np.log(layer_attn)
+        threshold = np.percentile(layer_attn, 95)
         for head in range(num_heads):
             head_attn = attentions[layer][0, head].detach().cpu().numpy()
-            head_log = np.log(head_attn)
-            mask = head_log >= threshold
+            # head_log = np.log(head_attn)
+            mask = head_attn >= threshold
 
             G = nx.MultiDiGraph()
             token_to_node = {i: i % N for i in range(seq_len)}
@@ -144,7 +163,7 @@ for layer in range(num_layers):
             nx.draw_networkx_labels(G, pos, ax=ax, font_size=5)
             ax.set_axis_off()
 
-plt.suptitle("Attention Graphs by Layer and Head", fontsize=10)
-plt.tight_layout()
-plt.savefig("graph_backbone_0.01_recurse.pdf", bbox_inches="tight")
-print("done")
+# plt.suptitle("Attention Graphs by Layer and Head", fontsize=10)
+# plt.tight_layout()
+# plt.savefig("graph_backbone_0.01_recurse.pdf", bbox_inches="tight")
+# print("done")
