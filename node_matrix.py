@@ -10,12 +10,16 @@ import os
 
 
 device = "mps" if torch.backends.mps.is_available() else "cpu"
-llama_path = "meta-llama/Llama-3.2-3B-Instruct"
+llama_path = "meta-llama/Llama-3.2-1B-Instruct"
 gemma_path = "google/gemma-2-2b-it"
-path = "google/gemma-2-2b-it"
+deepseek_path = "deepseek-ai/DeepSeek-R1-Distill-Qwen-1.5B"
+path = gemma_path
 
 model = AutoModelForCausalLM.from_pretrained(path, attn_implementation="eager", trust_remote_code=True).to(device)
 tokenizer = AutoTokenizer.from_pretrained(path)
+
+num_layers = len(model.model.layers)
+num_heads = model.config.num_attention_heads
 
 cent_metrics = {
     "betweenness": nx.betweenness_centrality,
@@ -25,30 +29,38 @@ cent_metrics = {
     "katz": nx.katz_centrality
 }
 
-# inputs = []
-# answers = []
-# seen = set()
+inputs = []
+answers = []
+seen = set()
 
-# while len(inputs) < 102:
-#     letters = random.choices("abc", weights=[100,1,1], k=5)
-#     sequence = ",".join(letters)
-#     if sequence in seen:
-#         continue
-#     seen.add(sequence)
+while len(inputs) < 102:
+    letters = random.choices("abc", weights=[100,1,1], k=5)
+    sequence = ",".join(letters)
+    if sequence in seen:
+        continue
+    seen.add(sequence)
+    prompt = (
+    "<|user|>\n"
+    "I will give you a sequence of 'a', 'b', and 'c' letters. I want you to tell me if 'a' is the most repeated letter in the sequence. "
+    "For example, for the sequence 'a,c,b,a,a' you should answer yes. For the sequence 'a,c,b,c,a' you should answer no. "
+    f"Question: Is 'a' the majority element in the following sequence '{sequence}'?\n"
+    "<think></think><answer>Answer with a single word, either yes or no:\n"
+    "<|assistant|>"
+    )
 
-#     inputs.append(f"I will give you a sequence of 'a', 'b', and 'c' letters. I want you to tell me if 'a' is the most repeated letter in the sequence. For example, for the sequence 'a,c,b,a,a' you should answer yes. For the sequence 'a,c,b,c,a' you should answer no. Question: Is 'a' the majority element in the following sequence '{sequence}'.\nAnswer yes/no:")
-#     answers.append("yes" if sequence.count("a") >= 3 else "no")
+    inputs.append(prompt)
+    answers.append("yes" if sequence.count("a") >= 3 else "no")
 
 
 
 SAVE_PATH = 'abc_inputs_even.pkl'
 
-# def save_data():
-#     with open(SAVE_PATH, 'wb') as f:
-#         pickle.dump({
-#             'inputs': inputs,
-#             'answers': answers,
-#         }, f)
+def save_data():
+    with open(SAVE_PATH, 'wb') as f:
+        pickle.dump({
+            'inputs': inputs,
+            'answers': answers,
+        }, f)
 
 def load_data():
     with open(SAVE_PATH, 'rb') as f:
@@ -63,14 +75,14 @@ inputs, answers = load_data()
 tokens_lst = []
 
 
-def store_graphs(inputs, answers, num_heads=32):
+def store_graphs(inputs, answers):
     stored_graphs = defaultdict(lambda: defaultdict(dict))
     performance = []
 
     for input_i, inp in enumerate(inputs):
         # get output
 
-        tokenized = tokenizer(inp, return_tensors="pt")
+        tokenized = tokenizer(inp, return_tensors="pt", add_special_tokens=False)
 
         tokens = tokenizer.convert_ids_to_tokens(tokenized['input_ids'][0])
         # print("\n=== Token Breakdown ===")
@@ -84,13 +96,13 @@ def store_graphs(inputs, answers, num_heads=32):
         outputs = model(**tokenized, output_attentions=True)
         attentions = outputs.attentions
 
-        generated = model.generate(**tokenized, max_new_tokens=50, do_sample=False)
+        generated = model.generate(**tokenized, max_new_tokens=15, do_sample=False)
         generated_tokens = generated[0][tokenized['input_ids'].shape[1]:]
         output = tokenizer.decode(generated_tokens, skip_special_tokens=True)
 
         k_tokens = generated_tokens[:15]
         decoded_k = tokenizer.decode(k_tokens, skip_special_tokens=True).lower()
-        # print(f"answer: {answers[input_i]} chars: {decoded_k}")
+        print(f"answer: {answers[input_i]} chars: {decoded_k}")
 
         seq_len = attentions[0].shape[-1]
         N = seq_len
@@ -109,7 +121,7 @@ def store_graphs(inputs, answers, num_heads=32):
             num_heads = attentions[layer].shape[1]
             layer_matrix = attentions[layer][0]
             flattened_vals = layer_matrix.flatten().detach().cpu().numpy()
-            log_weights = np.log(flattened_vals + 1)
+            log_weights = np.log(flattened_vals)
 
             # creating masked relational graph based on 95th percentile
 
@@ -118,7 +130,7 @@ def store_graphs(inputs, answers, num_heads=32):
             for head_i in range(num_heads):
                 head_matrix = attentions[layer][0, head_i]
                 head_matrix_np = head_matrix.detach().cpu().numpy()
-                log_matrix = np.log(head_matrix_np + 1)
+                log_matrix = np.log(head_matrix_np)
 
                 mask = log_matrix >= threshold
 
@@ -143,7 +155,7 @@ def store_graphs(inputs, answers, num_heads=32):
 
     return stored_graphs, performance, N
 
-def compute_centralities(stored_graphs, cent_metrics, num_inputs, num_heads=8, N=38, num_layers=26):
+def compute_centralities(stored_graphs, cent_metrics, num_inputs, num_heads, N, num_layers):
     res = {}
 
     for metric, fx in cent_metrics.items():
@@ -198,7 +210,7 @@ def save_performance_to_csv(inputs, answers, performance, filename="performance.
 
 
 graphs, performance, N = store_graphs(inputs, answers)
-results = compute_centralities(graphs, cent_metrics, len(inputs), N=N)
+results = compute_centralities(graphs, cent_metrics, len(inputs), num_heads, N, num_layers)
 
 # Save everything
 for metric_name, matrix in results.items():
