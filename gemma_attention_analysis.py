@@ -58,11 +58,11 @@ def extract_attention_and_embeddings(text: str, tokenizer, model) -> Dict:
         'prompt': text
     }
 
-def save_attention_data(data: Dict, output_dir: str, sample_id: int):
-    """Save attention and embedding data as CSV files."""
+def save_embedding_data(data: Dict, output_dir: str, sample_id: int):
+    """Save embedding matrices organized by layer subfolders."""
     os.makedirs(output_dir, exist_ok=True)
     
-    # Save tokens and basic info
+    # Save tokens and basic info in main folder
     token_df = pd.DataFrame({
         'token_id': range(len(data['tokens'])),
         'token': data['tokens'],
@@ -71,31 +71,12 @@ def save_attention_data(data: Dict, output_dir: str, sample_id: int):
     })
     token_df.to_csv(f"{output_dir}/sample_{sample_id:03d}_tokens.csv", index=False)
     
-    # Save attention weights for each layer
-    for layer_idx, attention_layer in enumerate(data['attentions']):
-        # attention_layer shape: (num_heads, seq_len, seq_len)
-        num_heads, seq_len, _ = attention_layer.shape
-        
-        # Flatten attention matrix for CSV storage
-        attention_records = []
-        for head_idx in range(num_heads):
-            for from_token in range(seq_len):
-                for to_token in range(seq_len):
-                    attention_records.append({
-                        'layer': layer_idx,
-                        'head': head_idx,
-                        'from_token': from_token,
-                        'to_token': to_token,
-                        'from_token_text': data['tokens'][from_token],
-                        'to_token_text': data['tokens'][to_token],
-                        'attention_weight': attention_layer[head_idx, from_token, to_token]
-                    })
-        
-        attention_df = pd.DataFrame(attention_records)
-        attention_df.to_csv(f"{output_dir}/sample_{sample_id:03d}_attention_layer_{layer_idx:02d}.csv", index=False)
-    
-    # Save embeddings (hidden states) for each layer
+    # Save embeddings (hidden states) for each layer in separate subfolders
     for layer_idx, hidden_state in enumerate(data['hidden_states']):
+        # Create subfolder for this layer
+        layer_dir = f"{output_dir}/layer_{layer_idx:02d}"
+        os.makedirs(layer_dir, exist_ok=True)
+        
         # hidden_state shape: (seq_len, hidden_size)
         seq_len, hidden_size = hidden_state.shape
         
@@ -114,7 +95,7 @@ def save_attention_data(data: Dict, output_dir: str, sample_id: int):
             embedding_records.append(record)
         
         embedding_df = pd.DataFrame(embedding_records)
-        embedding_df.to_csv(f"{output_dir}/sample_{sample_id:03d}_embeddings_layer_{layer_idx:02d}.csv", index=False)
+        embedding_df.to_csv(f"{layer_dir}/sample_{sample_id:03d}_embeddings.csv", index=False)
 
 def analyze_multiplication_samples(num_samples: int = 10, output_dir: str = "gemma_analysis_data"):
     """Analyze multiple multiplication samples and save results."""
@@ -127,7 +108,7 @@ def analyze_multiplication_samples(num_samples: int = 10, output_dir: str = "gem
         
         try:
             data = extract_attention_and_embeddings(prompt, tokenizer, model)
-            save_attention_data(data, output_dir, i)
+            save_embedding_data(data, output_dir, i)
             
             # Clear memory
             del data
@@ -141,4 +122,4 @@ def analyze_multiplication_samples(num_samples: int = 10, output_dir: str = "gem
     print(f"Analysis complete! Data saved to {output_dir}/")
 
 if __name__ == "__main__":
-    analyze_multiplication_samples(num_samples=20, output_dir="gemma_multiplication_analysis")
+    analyze_multiplication_samples(num_samples=200, output_dir="gemma_multiplication")
