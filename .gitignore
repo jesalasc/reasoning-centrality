@@ -1,1 +1,2 @@
 *.csv
+rsync -avh --dry-run /gemma_multiplication jsalas@kraken.ing.puc.cl:~/storage/

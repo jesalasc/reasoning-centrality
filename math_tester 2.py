@@ -1,45 +1,43 @@
 import torch
-from transformers import AutoModelForSeq2SeqLM, AutoModelForCausalLM, AutoTokenizer
+from transformers import AutoModelForCausalLM, AutoTokenizer
 import matplotlib.pyplot as plt
 import numpy as np
 import networkx as nx
 import random
+import gc
+import re
 
 np.set_printoptions(formatter={"float": "{:.4f}".format})
 
-device = "mps" if torch.backends.mps.is_available() else "cpu"
-llama_path = "meta-llama/Llama-3.2-3B-Instruct"
-gemma_path = "google/gemma-2-2b"
-new_gemma_path = "google/t5gemma-2b-2b-ul2"
-path = new_gemma_path
-
-model = AutoModelForSeq2SeqLM.from_pretrained(path, trust_remote_code=True, attn_implementation="eager").to(device)
-tokenizer = AutoTokenizer.from_pretrained(path, trust_remote_code=True)
-
-cent_metrics = {"betweenness": nx.betweenness_centrality,
-                "eigenvector": nx.eigenvector_centrality,
-                "pagerank": nx.pagerank,
-                "harmonic": nx.harmonic_centrality,
-                "katz": nx.katz_centrality}
-
-
 def average_centrality(inputs, show_graphs=False, show_outputs=False, show_centrality=False, layer=0, batch_i=0, head_i=0, N=10, cent_metric="betweenness", show_performance=False):
+    device = "mps" if torch.backends.mps.is_available() else "cpu"
+    path = "google/gemma-2-2b-it"
+
+    model = AutoModelForCausalLM.from_pretrained(path, trust_remote_code=True, attn_implementation="eager", low_cpu_mem_usage=True).to(device)
+    tokenizer = AutoTokenizer.from_pretrained(path, trust_remote_code=True)
+
+    cent_metrics = {"betweenness": nx.betweenness_centrality,
+                    "eigenvector": nx.eigenvector_centrality,
+                    "pagerank": nx.pagerank,
+                    "degree": nx.degree_centrality,
+                    "harmonic": nx.harmonic_centrality,
+                    "katz": nx.katz_centrality}
+
     centrality_vector = np.array([0]*N)
 
     if show_outputs or show_performance:
         output_tracker = []
-        none_tracker = 0
 
     for inp in inputs:
-        tokenized_inputs = tokenizer(inp, return_tensors="pt", add_special_tokens=True).to(device)
-        decoder_input_ids = torch.zeros((1, 1), dtype=torch.long, device=device)
-        outputs = model(**tokenized_inputs, decoder_input_ids=decoder_input_ids, output_attentions=True)
-        output_attentions = outputs.decoder_attentions
+        tokenized_inputs = tokenizer(inp, return_tensors="pt")
+        tokenized_inputs = {k: v.to(model.device) for k, v in tokenized_inputs.items()}
+        outputs = model(**tokenized_inputs, output_attentions=True)
+        output_attentions = outputs.attentions
 
         # creating graph
 
         def create_graph(attentions):
-            # exracting layer values
+            # extracting layer values
 
             layer_matrix = attentions[layer][batch_i]
             flattened_vals = layer_matrix.flatten().detach().cpu().numpy()
@@ -54,6 +52,7 @@ def average_centrality(inputs, show_graphs=False, show_outputs=False, show_centr
             log_matrix = np.log(head_matrix_np + 1)
 
             mask = log_matrix >= threshold
+            attention_layer = model.model.layers[layer].self_attn
 
             seq_len = head_matrix.shape[0]
             G = nx.MultiDiGraph()
@@ -112,74 +111,50 @@ def average_centrality(inputs, show_graphs=False, show_outputs=False, show_centr
         # output handling
 
         def show_output_func():
-            nonlocal none_tracker
-            generated = model.generate(**tokenized_inputs, max_new_tokens=50, do_sample=False, pad_token_id=tokenizer.pad_token_id if tokenizer.pad_token_id is not None else tokenizer.eos_token_id)
-            generated_tokens = generated[0]
-            output = tokenizer.decode(generated_tokens, skip_special_tokens=False)
+            generated = model.generate(**tokenized_inputs, max_new_tokens=50, do_sample=False, temperature=0)
+            generated_tokens = generated[0][tokenized_inputs['input_ids'].shape[1]:]
+            output = tokenizer.decode(generated_tokens, skip_special_tokens=True)
 
             k_tokens = generated_tokens[:10]
-            k_tokens_decoded = tokenizer.decode(k_tokens, skip_special_tokens=False).lower()
-            if "yes" in k_tokens_decoded:
-                output_tracker.append("yes")
-            elif "no" in k_tokens_decoded:
-                output_tracker.append("no")
-            else:
-                output_tracker.append("none")
-                none_tracker += 1
+            k_tokens_decoded = tokenizer.decode(k_tokens, skip_special_tokens=True).lower()
+            output_tracker.append(k_tokens_decoded)
             if show_outputs:
                 print(f"\n\nInput: {inp}")
-                print(f"\n\nOutput: {output}\n\n")
+                print(f"Output: {output}\n\n")
 
         if show_outputs or show_performance:
             show_output_func()
 
-    def check_accuracy(tracker, answers, none_tracker):
+    def check_accuracy(tracker, answers):
         tracker = np.array(tracker)
         answers = np.array(answers)
 
-        correct = np.sum(answers == tracker)
-        return (correct / len(answers), none_tracker / len(answers))
+        def is_correct(ans, track):
+            pattern = r"(?<!\d)" + re.escape(ans) + r"(?!\d)"
+            return bool(re.search(pattern, track))
+
+        correct = np.sum([is_correct(ans, track) for ans, track in zip(answers, tracker)])
+        return correct / len(answers)
 
     if show_performance:
-        accuracy, unknown = check_accuracy(output_tracker, ans_list, none_tracker)
-        print(f"Accuracy is {accuracy}\nRate of unknown performance is {unknown}")
+        accuracy = check_accuracy(output_tracker, ans_list)
+        print(f"Accuracy is {accuracy}\n")
 
     final_vector = centrality_vector / len(inputs)
     return final_vector
 
 inputs = []
-words_set = set()
-# while len(words_set) < 10:
-#     words = random.choices("abc", weights=[3,1,1], k=5)
-#     words_set.add(",".join(words))
+nums_set = set()
+while len(nums_set) < 5:
+    nums = random.choices("0123456789", k=3)
+    nums_set.add("".join(nums))
 
-words_set = {"b,c,b,c,b"}
 ans_list = []
 
-for sequence in words_set:
-    inputs.append(f"""<bos>
-Instruction:
-Decide if the target element 'a' is the majority in a list (i.e. appears in >50% of positions).
-Respond with exactly one word: yes or no.
-
-### Example 1
-List: [a, b, a, a, c]
-Target: a
-Answer: yes
-
-### Example 2
-List: [b, a, b, c, a]
-Target: a
-Answer: no
-
-### Now evaluate
-List: [{sequence}]
-Target: a
-Answer:""")
-    if sequence.count("a") >= 3:
-        ans_list.append("yes")
-    else:
-        ans_list.append("no")
+for num in nums_set:
+    inputs.append(f"Question: What is the answer to 189 + {num}. Respond with the corresponding three of four digit number.\nAnswer: ")
+    ans_list.append(f"{str(189 + int(num))}")
 
 
-print(f"Average centrality vector: \n{average_centrality(inputs, N=38, cent_metric="katz", show_performance=False, show_outputs=True, show_graphs=False, head_i=0, layer=0)}")
+print(f"Average centrality vector: \n{average_centrality(inputs, N=33, cent_metric="katz", show_performance=False, show_outputs=False, show_graphs=True, show_centrality=True)}")
+gc.collect()
