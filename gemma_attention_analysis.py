@@ -1,125 +1,42 @@
-import torch
-from transformers import AutoTokenizer, AutoModelForCausalLM
-import pandas as pd
-import os
 import random
 from typing import Dict, List
-import gc
+import pandas as pd
+import os
 
-def load_model(model_name: str = "google/gemma-2-2b"):
-    """Load the Gemma model and tokenizer."""
-    print(f"Loading {model_name}...")
-    tokenizer = AutoTokenizer.from_pretrained(model_name)
-    if tokenizer.pad_token is None:
-        tokenizer.pad_token = tokenizer.eos_token
-        
-    model = AutoModelForCausalLM.from_pretrained(
-        model_name,
-        torch_dtype=torch.float16,
-        device_map="auto",
-        attn_implementation="eager"
-    )
-    print(f"Model loaded")
-    return tokenizer, model
-
-def generate_multiplication_prompts(num_samples: int = 100) -> List[str]:
-    """Generate multiplication prompts with 3-digit numbers."""
+def generate_multiplication_prompts(num_samples: int = 100) -> List[Dict]:
+    """Generate multiplication prompts with 3-digit numbers and their expected answers."""
     prompts = []
     for _ in range(num_samples):
         n1 = random.randint(0, 999)
         n2 = random.randint(0, 999)
-        prompt = f"what is the value of {n1:03d} times {n2:03d}"
-        prompts.append(prompt)
+        prompt = f"<bos><start_of_turn>user\nAnswer the following just with the result of the multiplication. {n1:03d} x {n2:03d} = <end_of_turn>\n<start_of_turn>model\n"
+        expected_answer = n1 * n2
+        prompts.append({
+            'prompt': prompt,
+            'expected_answer': expected_answer
+        })
     return prompts
 
-def extract_attention_and_embeddings(text: str, tokenizer, model) -> Dict:
-    """Extract attention tensors and pre-attention embeddings for each token."""
-    device = next(model.parameters()).device
-    inputs = tokenizer(text, return_tensors="pt", padding=True, truncation=True)
-    inputs = {k: v.to(device) for k, v in inputs.items()}
-    
-    with torch.no_grad():
-        outputs = model(**inputs, output_attentions=True, output_hidden_states=True)
-        
-    # Extract tokens
-    tokens = tokenizer.convert_ids_to_tokens(inputs['input_ids'][0])
-    
-    # Extract attention weights (all layers, all heads)
-    attentions = outputs.attentions  # tuple of (batch_size, num_heads, seq_len, seq_len)
-    
-    # Extract hidden states (embeddings before each attention layer)
-    hidden_states = outputs.hidden_states  # tuple of (batch_size, seq_len, hidden_size)
-    
-    return {
-        'tokens': tokens,
-        'input_ids': inputs['input_ids'][0].cpu().numpy(),
-        'attentions': [att[0].cpu().numpy() for att in attentions],  # Remove batch dimension
-        'hidden_states': [hs[0].cpu().numpy() for hs in hidden_states],  # Remove batch dimension
-        'prompt': text
-    }
-
-def save_embedding_data(data: Dict, output_dir: str, sample_id: int):
-    """Save embedding matrices organized by layer subfolders."""
+def save_multiplication_data(prompts: List[Dict], output_dir: str):
+    """Save only the prompt and correct answer for each multiplication."""
     os.makedirs(output_dir, exist_ok=True)
-    
-    # Save tokens and basic info in main folder
-    token_df = pd.DataFrame({
-        'token_id': range(len(data['tokens'])),
-        'token': data['tokens'],
-        'input_id': data['input_ids'],
-        'prompt': [data['prompt']] * len(data['tokens'])
-    })
-    token_df.to_csv(f"{output_dir}/sample_{sample_id:03d}_tokens.csv", index=False)
-    
-    # Save embeddings (hidden states) for each layer in separate subfolders
-    for layer_idx, hidden_state in enumerate(data['hidden_states']):
-        # Create subfolder for this layer
-        layer_dir = f"{output_dir}/layer_{layer_idx:02d}"
-        os.makedirs(layer_dir, exist_ok=True)
-        
-        # hidden_state shape: (seq_len, hidden_size)
-        seq_len, hidden_size = hidden_state.shape
-        
-        # Create embedding records
-        embedding_records = []
-        for token_idx in range(seq_len):
-            record = {
-                'layer': layer_idx,
-                'token_id': token_idx,
-                'token': data['tokens'][token_idx],
-            }
-            # Add each embedding dimension as a separate column
-            for dim_idx in range(hidden_size):
-                record[f'embed_dim_{dim_idx:04d}'] = hidden_state[token_idx, dim_idx]
-            
-            embedding_records.append(record)
-        
-        embedding_df = pd.DataFrame(embedding_records)
-        embedding_df.to_csv(f"{layer_dir}/sample_{sample_id:03d}_embeddings.csv", index=False)
 
-def analyze_multiplication_samples(num_samples: int = 10, output_dir: str = "gemma_analysis_data"):
-    """Analyze multiple multiplication samples and save results."""
-    tokenizer, model = load_model()
+    data = []
+    for i, prompt_info in enumerate(prompts):
+        data.append({
+            'sample_id': i,
+            'prompt': prompt_info['prompt'],
+            'expected_answer': prompt_info['expected_answer']
+        })
+
+    df = pd.DataFrame(data)
+    df.to_csv(f"{output_dir}/multiplication_data.csv", index=False)
+
+def main_func(num_samples: int = 200, output_dir: str = "gemma_multiplication/multiplication_data"):
+    """Generate and save multiplication prompts with correct answers."""
     prompts = generate_multiplication_prompts(num_samples)
-    
-    print(f"Analyzing {num_samples} multiplication samples...")
-    for i, prompt in enumerate(prompts):
-        print(f"Processing sample {i+1}/{num_samples}: {prompt}")
-        
-        try:
-            data = extract_attention_and_embeddings(prompt, tokenizer, model)
-            save_embedding_data(data, output_dir, i)
-            
-            # Clear memory
-            del data
-            gc.collect()
-            torch.cuda.empty_cache() if torch.cuda.is_available() else None
-            
-        except Exception as e:
-            print(f"Error processing sample {i}: {e}")
-            continue
-    
-    print(f"Analysis complete! Data saved to {output_dir}/")
+    save_multiplication_data(prompts, output_dir)
+    print(f"Generated {num_samples} multiplication problems saved to {output_dir}/multiplication_data.csv")
 
 if __name__ == "__main__":
-    analyze_multiplication_samples(num_samples=200, output_dir="gemma_multiplication")
+    main_func(num_samples=50000)
