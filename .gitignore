@@ -1,3 +1,6 @@
 *.csv
 rsync -avh --dry-run /gemma_multiplication jsalas@kraken.ing.puc.cl:~/storage/
+<<<<<<< HEAD
 gemma_multiplication/train_peft.py
+=======
+>>>>>>> 48811710d830fc205797e200bd12ea1a5cc25cba
