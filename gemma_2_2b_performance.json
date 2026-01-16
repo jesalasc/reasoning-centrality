@@ -1,0 +1,1808 @@
+{
+  "model_name": "google/gemma-2-2b",
+  "total_prompts": 200,
+  "correct_answers": 6,
+  "accuracy": 0.03,
+  "results": [
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 754 x 214 = ",
+      "n1": 754,
+      "n2": 214,
+      "correct_answer": 161356,
+      "raw_response": "162,016 754 x 21",
+      "predicted_answer": 162016,
+      "is_correct": false
+    },
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 125 x 859 = ",
+      "n1": 125,
+      "n2": 859,
+      "correct_answer": 107375,
+      "raw_response": "106,225 125 x 85",
+      "predicted_answer": 106225,
+      "is_correct": false
+    },
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 381 x 350 = ",
+      "n1": 381,
+      "n2": 350,
+      "correct_answer": 133350,
+      "raw_response": "130,550 381 x 35",
+      "predicted_answer": 130550,
+      "is_correct": false
+    },
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 328 x 242 = ",
+      "n1": 328,
+      "n2": 242,
+      "correct_answer": 79376,
+      "raw_response": "80,000 328 x 242",
+      "predicted_answer": 80000,
+      "is_correct": false
+    },
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 854 x 204 = ",
+      "n1": 854,
+      "n2": 204,
+      "correct_answer": 174216,
+      "raw_response": "172,816 854 x 20",
+      "predicted_answer": 172816,
+      "is_correct": false
+    },
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 792 x 858 = ",
+      "n1": 792,
+      "n2": 858,
+      "correct_answer": 679536,
+      "raw_response": "700000\n\nAnswer:\n\nStep 1/2",
+      "predicted_answer": 1,
+      "is_correct": false
+    },
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 658 x 189 = ",
+      "n1": 658,
+      "n2": 189,
+      "correct_answer": 124362,
+      "raw_response": "123,722 658 x 18",
+      "predicted_answer": 123722,
+      "is_correct": false
+    },
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 704 x 532 = ",
+      "n1": 704,
+      "n2": 532,
+      "correct_answer": 374528,
+      "raw_response": "37,008 704 x 532",
+      "predicted_answer": 37008,
+      "is_correct": false
+    },
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 132 x 130 = ",
+      "n1": 132,
+      "n2": 130,
+      "correct_answer": 17160,
+      "raw_response": "16,960 132 x 130",
+      "predicted_answer": 16960,
+      "is_correct": false
+    },
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 195 x 323 = ",
+      "n1": 195,
+      "n2": 323,
+      "correct_answer": 62985,
+      "raw_response": "63,945 195 x 323",
+      "predicted_answer": 63945,
+      "is_correct": false
+    },
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 338 x 617 = ",
+      "n1": 338,
+      "n2": 617,
+      "correct_answer": 208546,
+      "raw_response": "207,006\n\nAnswer:\n\nStep 1/",
+      "predicted_answer": 207006,
+      "is_correct": false
+    },
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 716 x 127 = ",
+      "n1": 716,
+      "n2": 127,
+      "correct_answer": 90932,
+      "raw_response": "89392\n\nAnswer:\n\nStep 1/2",
+      "predicted_answer": 1,
+      "is_correct": false
+    },
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 674 x 303 = ",
+      "n1": 674,
+      "n2": 303,
+      "correct_answer": 204222,
+      "raw_response": "200000\n\nAnswer:\n\nStep 1/2",
+      "predicted_answer": 1,
+      "is_correct": false
+    },
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 833 x 765 = ",
+      "n1": 833,
+      "n2": 765,
+      "correct_answer": 637245,
+      "raw_response": "625,885\n\nAnswer:\n\nStep 1/",
+      "predicted_answer": 625885,
+      "is_correct": false
+    },
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 818 x 658 = ",
+      "n1": 818,
+      "n2": 658,
+      "correct_answer": 538244,
+      "raw_response": "53,000 818 x 658",
+      "predicted_answer": 53000,
+      "is_correct": false
+    },
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 529 x 325 = ",
+      "n1": 529,
+      "n2": 325,
+      "correct_answer": 171925,
+      "raw_response": "167,725 529 x 32",
+      "predicted_answer": 167725,
+      "is_correct": false
+    },
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 559 x 703 = ",
+      "n1": 559,
+      "n2": 703,
+      "correct_answer": 392977,
+      "raw_response": "389,277\n\nAnswer:\n\nStep 1/",
+      "predicted_answer": 389277,
+      "is_correct": false
+    },
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 384 x 928 = ",
+      "n1": 384,
+      "n2": 928,
+      "correct_answer": 356352,
+      "raw_response": "384 x 928 = 384 x",
+      "predicted_answer": 384,
+      "is_correct": false
+    },
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 990 x 106 = ",
+      "n1": 990,
+      "n2": 106,
+      "correct_answer": 104940,
+      "raw_response": "990000000000000",
+      "predicted_answer": null,
+      "is_correct": false
+    },
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 877 x 925 = ",
+      "n1": 877,
+      "n2": 925,
+      "correct_answer": 811225,
+      "raw_response": "800000\n\nAnswer:\n\nStep 1/2",
+      "predicted_answer": 1,
+      "is_correct": false
+    },
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 263 x 814 = ",
+      "n1": 263,
+      "n2": 814,
+      "correct_answer": 214082,
+      "raw_response": "209,282 263 x 81",
+      "predicted_answer": 209282,
+      "is_correct": false
+    },
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 532 x 448 = ",
+      "n1": 532,
+      "n2": 448,
+      "correct_answer": 238336,
+      "raw_response": "236,144 532 x 44",
+      "predicted_answer": 236144,
+      "is_correct": false
+    },
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 384 x 259 = ",
+      "n1": 384,
+      "n2": 259,
+      "correct_answer": 99456,
+      "raw_response": "97,664 384 x 259",
+      "predicted_answer": 97664,
+      "is_correct": false
+    },
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 320 x 881 = ",
+      "n1": 320,
+      "n2": 881,
+      "correct_answer": 281920,
+      "raw_response": "28,176 320 x 881",
+      "predicted_answer": 28176,
+      "is_correct": false
+    },
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 444 x 204 = ",
+      "n1": 444,
+      "n2": 204,
+      "correct_answer": 90576,
+      "raw_response": "89368\n\nAnswer:\n\nStep 1/2",
+      "predicted_answer": 1,
+      "is_correct": false
+    },
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 194 x 489 = ",
+      "n1": 194,
+      "n2": 489,
+      "correct_answer": 94866,
+      "raw_response": "93,756 194 x 489",
+      "predicted_answer": 93756,
+      "is_correct": false
+    },
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 199 x 467 = ",
+      "n1": 199,
+      "n2": 467,
+      "correct_answer": 92933,
+      "raw_response": "93,333 199 x 467",
+      "predicted_answer": 93333,
+      "is_correct": false
+    },
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 967 x 452 = ",
+      "n1": 967,
+      "n2": 452,
+      "correct_answer": 437084,
+      "raw_response": "438,994 967 x 45",
+      "predicted_answer": 438994,
+      "is_correct": false
+    },
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 718 x 370 = ",
+      "n1": 718,
+      "n2": 370,
+      "correct_answer": 265660,
+      "raw_response": "263960\n\nAnswer:\n\nStep 1/2",
+      "predicted_answer": 1,
+      "is_correct": false
+    },
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 926 x 144 = ",
+      "n1": 926,
+      "n2": 144,
+      "correct_answer": 133344,
+      "raw_response": "13,2224\n\nAnswer:\n\nStep 1/",
+      "predicted_answer": 13,
+      "is_correct": false
+    },
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 847 x 570 = ",
+      "n1": 847,
+      "n2": 570,
+      "correct_answer": 482790,
+      "raw_response": "47,000 847 x 570",
+      "predicted_answer": 47000,
+      "is_correct": false
+    },
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 649 x 227 = ",
+      "n1": 649,
+      "n2": 227,
+      "correct_answer": 147323,
+      "raw_response": "148,033 649 x 22",
+      "predicted_answer": 148033,
+      "is_correct": false
+    },
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 487 x 180 = ",
+      "n1": 487,
+      "n2": 180,
+      "correct_answer": 87660,
+      "raw_response": "86,560 487 x 180",
+      "predicted_answer": 86560,
+      "is_correct": false
+    },
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 665 x 400 = ",
+      "n1": 665,
+      "n2": 400,
+      "correct_answer": 266000,
+      "raw_response": "266000\n\nAnswer:\n\nStep 1/2",
+      "predicted_answer": 266000,
+      "is_correct": true
+    },
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 949 x 743 = ",
+      "n1": 949,
+      "n2": 743,
+      "correct_answer": 705107,
+      "raw_response": "700000\n\nAnswer:\n\nStep 1/2",
+      "predicted_answer": 1,
+      "is_correct": false
+    },
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 733 x 982 = ",
+      "n1": 733,
+      "n2": 982,
+      "correct_answer": 719806,
+      "raw_response": "733 x 982 = 733 x",
+      "predicted_answer": 733,
+      "is_correct": false
+    },
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 470 x 691 = ",
+      "n1": 470,
+      "n2": 691,
+      "correct_answer": 324770,
+      "raw_response": "32,009\n\nAnswer:\n\nStep 1/2",
+      "predicted_answer": 32009,
+      "is_correct": false
+    },
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 296 x 821 = ",
+      "n1": 296,
+      "n2": 821,
+      "correct_answer": 243016,
+      "raw_response": "23,506 296 x 821",
+      "predicted_answer": 23506,
+      "is_correct": false
+    },
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 171 x 146 = ",
+      "n1": 171,
+      "n2": 146,
+      "correct_answer": 24966,
+      "raw_response": "24,936 171 x 146",
+      "predicted_answer": 24936,
+      "is_correct": false
+    },
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 777 x 333 = ",
+      "n1": 777,
+      "n2": 333,
+      "correct_answer": 258741,
+      "raw_response": "250000\n\nAnswer:\n\nStep 1/2",
+      "predicted_answer": 1,
+      "is_correct": false
+    },
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 891 x 396 = ",
+      "n1": 891,
+      "n2": 396,
+      "correct_answer": 352836,
+      "raw_response": "35,000.\n\nAnswer the following just with the result",
+      "predicted_answer": 35000,
+      "is_correct": false
+    },
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 181 x 975 = ",
+      "n1": 181,
+      "n2": 975,
+      "correct_answer": 176475,
+      "raw_response": "179825 181 x 975",
+      "predicted_answer": 181,
+      "is_correct": false
+    },
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 338 x 987 = ",
+      "n1": 338,
+      "n2": 987,
+      "correct_answer": 333606,
+      "raw_response": "338 x 987 = 338 x",
+      "predicted_answer": 338,
+      "is_correct": false
+    },
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 203 x 489 = ",
+      "n1": 203,
+      "n2": 489,
+      "correct_answer": 99267,
+      "raw_response": "98,777 203 x 489",
+      "predicted_answer": 98777,
+      "is_correct": false
+    },
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 384 x 564 = ",
+      "n1": 384,
+      "n2": 564,
+      "correct_answer": 216576,
+      "raw_response": "21,694,480 384 x",
+      "predicted_answer": 21694480,
+      "is_correct": false
+    },
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 750 x 954 = ",
+      "n1": 750,
+      "n2": 954,
+      "correct_answer": 715500,
+      "raw_response": "702,500 750 x 95",
+      "predicted_answer": 702500,
+      "is_correct": false
+    },
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 473 x 266 = ",
+      "n1": 473,
+      "n2": 266,
+      "correct_answer": 125818,
+      "raw_response": "125,000.\n\nAnswer:\n\nStep 1",
+      "predicted_answer": 125000,
+      "is_correct": false
+    },
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 479 x 463 = ",
+      "n1": 479,
+      "n2": 463,
+      "correct_answer": 221777,
+      "raw_response": "21,757\n\nAnswer:\n\nStep 1/2",
+      "predicted_answer": 21757,
+      "is_correct": false
+    },
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 314 x 786 = ",
+      "n1": 314,
+      "n2": 786,
+      "correct_answer": 246804,
+      "raw_response": "249,304 314 x 78",
+      "predicted_answer": 249304,
+      "is_correct": false
+    },
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 373 x 818 = ",
+      "n1": 373,
+      "n2": 818,
+      "correct_answer": 305114,
+      "raw_response": "300000000000000",
+      "predicted_answer": null,
+      "is_correct": false
+    },
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 799 x 763 = ",
+      "n1": 799,
+      "n2": 763,
+      "correct_answer": 609637,
+      "raw_response": "600000\n\nAnswer:\n\nStep 1/2",
+      "predicted_answer": 1,
+      "is_correct": false
+    },
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 173 x 723 = ",
+      "n1": 173,
+      "n2": 723,
+      "correct_answer": 125079,
+      "raw_response": "125,009 173 x 72",
+      "predicted_answer": 125009,
+      "is_correct": false
+    },
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 750 x 275 = ",
+      "n1": 750,
+      "n2": 275,
+      "correct_answer": 206250,
+      "raw_response": "206250\n\nAnswer:\n\nStep 1/2",
+      "predicted_answer": 206250,
+      "is_correct": true
+    },
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 646 x 846 = ",
+      "n1": 646,
+      "n2": 846,
+      "correct_answer": 546516,
+      "raw_response": "544,104\n\nAnswer:\n\nStep 1/",
+      "predicted_answer": 544104,
+      "is_correct": false
+    },
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 350 x 267 = ",
+      "n1": 350,
+      "n2": 267,
+      "correct_answer": 93450,
+      "raw_response": "92,150 350 x 267",
+      "predicted_answer": 92150,
+      "is_correct": false
+    },
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 573 x 488 = ",
+      "n1": 573,
+      "n2": 488,
+      "correct_answer": 279624,
+      "raw_response": "272,544\n\nAnswer:\n\nStep 1/",
+      "predicted_answer": 272544,
+      "is_correct": false
+    },
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 376 x 755 = ",
+      "n1": 376,
+      "n2": 755,
+      "correct_answer": 283880,
+      "raw_response": "290,050 376 x 75",
+      "predicted_answer": 290050,
+      "is_correct": false
+    },
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 804 x 670 = ",
+      "n1": 804,
+      "n2": 670,
+      "correct_answer": 538680,
+      "raw_response": "534,880 804 x 67",
+      "predicted_answer": 534880,
+      "is_correct": false
+    },
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 324 x 801 = ",
+      "n1": 324,
+      "n2": 801,
+      "correct_answer": 259524,
+      "raw_response": "256,844 324 x 80",
+      "predicted_answer": 256844,
+      "is_correct": false
+    },
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 432 x 963 = ",
+      "n1": 432,
+      "n2": 963,
+      "correct_answer": 416016,
+      "raw_response": "432 x 963 = 432 x",
+      "predicted_answer": 432,
+      "is_correct": false
+    },
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 886 x 894 = ",
+      "n1": 886,
+      "n2": 894,
+      "correct_answer": 792084,
+      "raw_response": "886 x 894 = 886 x",
+      "predicted_answer": 886,
+      "is_correct": false
+    },
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 157 x 334 = ",
+      "n1": 157,
+      "n2": 334,
+      "correct_answer": 52438,
+      "raw_response": "50,000 157 x 334",
+      "predicted_answer": 50000,
+      "is_correct": false
+    },
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 941 x 132 = ",
+      "n1": 941,
+      "n2": 132,
+      "correct_answer": 124212,
+      "raw_response": "125,322 941 x 13",
+      "predicted_answer": 125322,
+      "is_correct": false
+    },
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 924 x 423 = ",
+      "n1": 924,
+      "n2": 423,
+      "correct_answer": 390852,
+      "raw_response": "38,002\n\nAnswer:\n\nStep 1/2",
+      "predicted_answer": 38002,
+      "is_correct": false
+    },
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 510 x 374 = ",
+      "n1": 510,
+      "n2": 374,
+      "correct_answer": 190740,
+      "raw_response": "185,040 510 x 37",
+      "predicted_answer": 185040,
+      "is_correct": false
+    },
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 167 x 316 = ",
+      "n1": 167,
+      "n2": 316,
+      "correct_answer": 52772,
+      "raw_response": "51,004 167 x 316",
+      "predicted_answer": 51004,
+      "is_correct": false
+    },
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 680 x 997 = ",
+      "n1": 680,
+      "n2": 997,
+      "correct_answer": 677960,
+      "raw_response": "680 x 997 = 680 x",
+      "predicted_answer": 680,
+      "is_correct": false
+    },
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 835 x 422 = ",
+      "n1": 835,
+      "n2": 422,
+      "correct_answer": 352370,
+      "raw_response": "34,585 835 x 422",
+      "predicted_answer": 34585,
+      "is_correct": false
+    },
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 317 x 771 = ",
+      "n1": 317,
+      "n2": 771,
+      "correct_answer": 244407,
+      "raw_response": "245,077 317 x 77",
+      "predicted_answer": 245077,
+      "is_correct": false
+    },
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 611 x 505 = ",
+      "n1": 611,
+      "n2": 505,
+      "correct_answer": 308555,
+      "raw_response": "306555\n\nAnswer:\n\nStep 1/2",
+      "predicted_answer": 1,
+      "is_correct": false
+    },
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 758 x 569 = ",
+      "n1": 758,
+      "n2": 569,
+      "correct_answer": 431302,
+      "raw_response": "429,722 758 x 56",
+      "predicted_answer": 429722,
+      "is_correct": false
+    },
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 246 x 371 = ",
+      "n1": 246,
+      "n2": 371,
+      "correct_answer": 91266,
+      "raw_response": "92,336 246 x 371",
+      "predicted_answer": 92336,
+      "is_correct": false
+    },
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 242 x 352 = ",
+      "n1": 242,
+      "n2": 352,
+      "correct_answer": 85184,
+      "raw_response": "86,448 242 x 352",
+      "predicted_answer": 86448,
+      "is_correct": false
+    },
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 862 x 674 = ",
+      "n1": 862,
+      "n2": 674,
+      "correct_answer": 580988,
+      "raw_response": "58,008\n\nAnswer:\n\nStep 1/2",
+      "predicted_answer": 58008,
+      "is_correct": false
+    },
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 651 x 369 = ",
+      "n1": 651,
+      "n2": 369,
+      "correct_answer": 240219,
+      "raw_response": "239,549 651 x 36",
+      "predicted_answer": 239549,
+      "is_correct": false
+    },
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 864 x 698 = ",
+      "n1": 864,
+      "n2": 698,
+      "correct_answer": 603072,
+      "raw_response": "600000000000000",
+      "predicted_answer": null,
+      "is_correct": false
+    },
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 538 x 697 = ",
+      "n1": 538,
+      "n2": 697,
+      "correct_answer": 374986,
+      "raw_response": "379,226 538 x 69",
+      "predicted_answer": 379226,
+      "is_correct": false
+    },
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 508 x 470 = ",
+      "n1": 508,
+      "n2": 470,
+      "correct_answer": 238760,
+      "raw_response": "239200\n\nAnswer:\n\nStep 1/2",
+      "predicted_answer": 1,
+      "is_correct": false
+    },
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 324 x 241 = ",
+      "n1": 324,
+      "n2": 241,
+      "correct_answer": 78084,
+      "raw_response": "77,744 324 x 241",
+      "predicted_answer": 77744,
+      "is_correct": false
+    },
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 621 x 605 = ",
+      "n1": 621,
+      "n2": 605,
+      "correct_answer": 375705,
+      "raw_response": "373,055\n\nAnswer:\n\nStep 1/",
+      "predicted_answer": 373055,
+      "is_correct": false
+    },
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 193 x 873 = ",
+      "n1": 193,
+      "n2": 873,
+      "correct_answer": 168489,
+      "raw_response": "175,999 193 x 87",
+      "predicted_answer": 175999,
+      "is_correct": false
+    },
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 148 x 981 = ",
+      "n1": 148,
+      "n2": 981,
+      "correct_answer": 145188,
+      "raw_response": "148 x 980 + 148 x",
+      "predicted_answer": 148,
+      "is_correct": false
+    },
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 212 x 256 = ",
+      "n1": 212,
+      "n2": 256,
+      "correct_answer": 54272,
+      "raw_response": "53760\n\nAnswer:\n\nStep 1/2",
+      "predicted_answer": 1,
+      "is_correct": false
+    },
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 742 x 263 = ",
+      "n1": 742,
+      "n2": 263,
+      "correct_answer": 195146,
+      "raw_response": "190000\n\nAnswer:\n\nStep 1/2",
+      "predicted_answer": 1,
+      "is_correct": false
+    },
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 911 x 796 = ",
+      "n1": 911,
+      "n2": 796,
+      "correct_answer": 725156,
+      "raw_response": "70,006.\n\nAnswer the following just with the result",
+      "predicted_answer": 70006,
+      "is_correct": false
+    },
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 532 x 710 = ",
+      "n1": 532,
+      "n2": 710,
+      "correct_answer": 377720,
+      "raw_response": "37,062 532 x 710",
+      "predicted_answer": 37062,
+      "is_correct": false
+    },
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 165 x 494 = ",
+      "n1": 165,
+      "n2": 494,
+      "correct_answer": 81510,
+      "raw_response": "165 x 494 = 165 x",
+      "predicted_answer": 165,
+      "is_correct": false
+    },
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 490 x 710 = ",
+      "n1": 490,
+      "n2": 710,
+      "correct_answer": 347900,
+      "raw_response": "349900\n\nAnswer:\n\nStep 1/2",
+      "predicted_answer": 1,
+      "is_correct": false
+    },
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 579 x 641 = ",
+      "n1": 579,
+      "n2": 641,
+      "correct_answer": 371139,
+      "raw_response": "369,309\n\nAnswer:\n\nStep 1/",
+      "predicted_answer": 369309,
+      "is_correct": false
+    },
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 357 x 666 = ",
+      "n1": 357,
+      "n2": 666,
+      "correct_answer": 237762,
+      "raw_response": "233332\n\nAnswer:\n\nStep 1/2",
+      "predicted_answer": 1,
+      "is_correct": false
+    },
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 981 x 111 = ",
+      "n1": 981,
+      "n2": 111,
+      "correct_answer": 108891,
+      "raw_response": "109991\n\nAnswer:\n\nStep 1/2",
+      "predicted_answer": 1,
+      "is_correct": false
+    },
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 796 x 838 = ",
+      "n1": 796,
+      "n2": 838,
+      "correct_answer": 667048,
+      "raw_response": "675,288\n\nAnswer:\n\nStep 1/",
+      "predicted_answer": 675288,
+      "is_correct": false
+    },
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 217 x 798 = ",
+      "n1": 217,
+      "n2": 798,
+      "correct_answer": 173166,
+      "raw_response": "170000\n\nAnswer:\n\nStep 1/2",
+      "predicted_answer": 1,
+      "is_correct": false
+    },
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 649 x 868 = ",
+      "n1": 649,
+      "n2": 868,
+      "correct_answer": 563332,
+      "raw_response": "56,000,000\n\nAnswer:\n\nStep",
+      "predicted_answer": 56000000,
+      "is_correct": false
+    },
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 373 x 887 = ",
+      "n1": 373,
+      "n2": 887,
+      "correct_answer": 330851,
+      "raw_response": "314,011 373 x 88",
+      "predicted_answer": 314011,
+      "is_correct": false
+    },
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 756 x 448 = ",
+      "n1": 756,
+      "n2": 448,
+      "correct_answer": 338688,
+      "raw_response": "333,328\n\nAnswer:\n\nStep 1/",
+      "predicted_answer": 333328,
+      "is_correct": false
+    },
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 214 x 400 = ",
+      "n1": 214,
+      "n2": 400,
+      "correct_answer": 85600,
+      "raw_response": "85600 214 x 400 =",
+      "predicted_answer": 85600,
+      "is_correct": true
+    },
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 545 x 261 = ",
+      "n1": 545,
+      "n2": 261,
+      "correct_answer": 142245,
+      "raw_response": "140,005 545 x 26",
+      "predicted_answer": 140005,
+      "is_correct": false
+    },
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 564 x 103 = ",
+      "n1": 564,
+      "n2": 103,
+      "correct_answer": 58092,
+      "raw_response": "564000 564 x 100",
+      "predicted_answer": 564,
+      "is_correct": false
+    },
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 839 x 996 = ",
+      "n1": 839,
+      "n2": 996,
+      "correct_answer": 835644,
+      "raw_response": "839 x 996 = 839 x",
+      "predicted_answer": 839,
+      "is_correct": false
+    },
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 836 x 369 = ",
+      "n1": 836,
+      "n2": 369,
+      "correct_answer": 308484,
+      "raw_response": "300000\n\nAnswer:\n\nStep 1/2",
+      "predicted_answer": 1,
+      "is_correct": false
+    },
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 612 x 880 = ",
+      "n1": 612,
+      "n2": 880,
+      "correct_answer": 538560,
+      "raw_response": "547200\n\nAnswer:\n\nStep 1/2",
+      "predicted_answer": 1,
+      "is_correct": false
+    },
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 282 x 619 = ",
+      "n1": 282,
+      "n2": 619,
+      "correct_answer": 174558,
+      "raw_response": "174,388 282 x 61",
+      "predicted_answer": 174388,
+      "is_correct": false
+    },
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 208 x 991 = ",
+      "n1": 208,
+      "n2": 991,
+      "correct_answer": 206128,
+      "raw_response": "208 x 990 + 208 x",
+      "predicted_answer": 208,
+      "is_correct": false
+    },
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 740 x 405 = ",
+      "n1": 740,
+      "n2": 405,
+      "correct_answer": 299700,
+      "raw_response": "29,800 740 x 405",
+      "predicted_answer": 29800,
+      "is_correct": false
+    },
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 961 x 754 = ",
+      "n1": 961,
+      "n2": 754,
+      "correct_answer": 724594,
+      "raw_response": "715,444\n\nAnswer:\n\nStep 1/",
+      "predicted_answer": 715444,
+      "is_correct": false
+    },
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 619 x 723 = ",
+      "n1": 619,
+      "n2": 723,
+      "correct_answer": 447537,
+      "raw_response": "447,177\n\nAnswer:\n\nStep 1/",
+      "predicted_answer": 447177,
+      "is_correct": false
+    },
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 303 x 256 = ",
+      "n1": 303,
+      "n2": 256,
+      "correct_answer": 77568,
+      "raw_response": "76800\n\nAnswer:\n\nStep 1/2",
+      "predicted_answer": 1,
+      "is_correct": false
+    },
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 482 x 880 = ",
+      "n1": 482,
+      "n2": 880,
+      "correct_answer": 424160,
+      "raw_response": "482 x 880 = 482 x",
+      "predicted_answer": 482,
+      "is_correct": false
+    },
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 265 x 652 = ",
+      "n1": 265,
+      "n2": 652,
+      "correct_answer": 172780,
+      "raw_response": "170000\n\nAnswer:\n\nStep 1/2",
+      "predicted_answer": 1,
+      "is_correct": false
+    },
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 897 x 643 = ",
+      "n1": 897,
+      "n2": 643,
+      "correct_answer": 576771,
+      "raw_response": "575,211 897 x 64",
+      "predicted_answer": 575211,
+      "is_correct": false
+    },
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 100 x 713 = ",
+      "n1": 100,
+      "n2": 713,
+      "correct_answer": 71300,
+      "raw_response": "71300\n\nAnswer:\n\nStep 1/2",
+      "predicted_answer": 71300,
+      "is_correct": true
+    },
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 431 x 600 = ",
+      "n1": 431,
+      "n2": 600,
+      "correct_answer": 258600,
+      "raw_response": "252600\n\nAnswer:\n\nStep 1/2",
+      "predicted_answer": 1,
+      "is_correct": false
+    },
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 119 x 214 = ",
+      "n1": 119,
+      "n2": 214,
+      "correct_answer": 25466,
+      "raw_response": "25,946 119 x 214",
+      "predicted_answer": 25946,
+      "is_correct": false
+    },
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 471 x 999 = ",
+      "n1": 471,
+      "n2": 999,
+      "correct_answer": 470529,
+      "raw_response": "471 x 1000 - 1 = 4",
+      "predicted_answer": 471,
+      "is_correct": false
+    },
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 951 x 926 = ",
+      "n1": 951,
+      "n2": 926,
+      "correct_answer": 880626,
+      "raw_response": "87,906\n\nAnswer:\n\nStep 1/2",
+      "predicted_answer": 87906,
+      "is_correct": false
+    },
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 414 x 345 = ",
+      "n1": 414,
+      "n2": 345,
+      "correct_answer": 142830,
+      "raw_response": "142,710 414 x 34",
+      "predicted_answer": 142710,
+      "is_correct": false
+    },
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 159 x 346 = ",
+      "n1": 159,
+      "n2": 346,
+      "correct_answer": 55014,
+      "raw_response": "53,744 159 x 346",
+      "predicted_answer": 53744,
+      "is_correct": false
+    },
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 999 x 680 = ",
+      "n1": 999,
+      "n2": 680,
+      "correct_answer": 679320,
+      "raw_response": "680 x 999 = 680 x",
+      "predicted_answer": 680,
+      "is_correct": false
+    },
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 180 x 187 = ",
+      "n1": 180,
+      "n2": 187,
+      "correct_answer": 33660,
+      "raw_response": "32,760 180 x 187",
+      "predicted_answer": 32760,
+      "is_correct": false
+    },
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 849 x 597 = ",
+      "n1": 849,
+      "n2": 597,
+      "correct_answer": 506853,
+      "raw_response": "499913\n\nAnswer:\n\nStep 1/2",
+      "predicted_answer": 1,
+      "is_correct": false
+    },
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 935 x 170 = ",
+      "n1": 935,
+      "n2": 170,
+      "correct_answer": 158950,
+      "raw_response": "159,550 935 x 17",
+      "predicted_answer": 159550,
+      "is_correct": false
+    },
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 878 x 645 = ",
+      "n1": 878,
+      "n2": 645,
+      "correct_answer": 566310,
+      "raw_response": "562,820 878 x 64",
+      "predicted_answer": 562820,
+      "is_correct": false
+    },
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 884 x 228 = ",
+      "n1": 884,
+      "n2": 228,
+      "correct_answer": 201552,
+      "raw_response": "200000\n\nAnswer:\n\nStep 1/2",
+      "predicted_answer": 1,
+      "is_correct": false
+    },
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 231 x 775 = ",
+      "n1": 231,
+      "n2": 775,
+      "correct_answer": 179025,
+      "raw_response": "180000\n\nAnswer:\n\nStep 1/2",
+      "predicted_answer": 1,
+      "is_correct": false
+    },
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 586 x 662 = ",
+      "n1": 586,
+      "n2": 662,
+      "correct_answer": 387932,
+      "raw_response": "379,372 586 x 66",
+      "predicted_answer": 379372,
+      "is_correct": false
+    },
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 269 x 371 = ",
+      "n1": 269,
+      "n2": 371,
+      "correct_answer": 99799,
+      "raw_response": "97,309 269 x 371",
+      "predicted_answer": 97309,
+      "is_correct": false
+    },
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 640 x 993 = ",
+      "n1": 640,
+      "n2": 993,
+      "correct_answer": 635520,
+      "raw_response": "636,720 640 x 99",
+      "predicted_answer": 636720,
+      "is_correct": false
+    },
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 721 x 533 = ",
+      "n1": 721,
+      "n2": 533,
+      "correct_answer": 384293,
+      "raw_response": "38,003\n\nAnswer:\n\nStep 1/2",
+      "predicted_answer": 38003,
+      "is_correct": false
+    },
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 316 x 652 = ",
+      "n1": 316,
+      "n2": 652,
+      "correct_answer": 206032,
+      "raw_response": "200000\n\nAnswer:\n\nStep 1/2",
+      "predicted_answer": 1,
+      "is_correct": false
+    },
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 873 x 847 = ",
+      "n1": 873,
+      "n2": 847,
+      "correct_answer": 739431,
+      "raw_response": "745111\n\nAnswer:\n\nStep 1/2",
+      "predicted_answer": 1,
+      "is_correct": false
+    },
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 806 x 305 = ",
+      "n1": 806,
+      "n2": 305,
+      "correct_answer": 245830,
+      "raw_response": "245,130 806 x 30",
+      "predicted_answer": 245130,
+      "is_correct": false
+    },
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 830 x 419 = ",
+      "n1": 830,
+      "n2": 419,
+      "correct_answer": 347770,
+      "raw_response": "34,071 830 x 419",
+      "predicted_answer": 34071,
+      "is_correct": false
+    },
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 508 x 787 = ",
+      "n1": 508,
+      "n2": 787,
+      "correct_answer": 399796,
+      "raw_response": "39,506 508 x 787",
+      "predicted_answer": 39506,
+      "is_correct": false
+    },
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 765 x 482 = ",
+      "n1": 765,
+      "n2": 482,
+      "correct_answer": 368730,
+      "raw_response": "360,300 765 x 48",
+      "predicted_answer": 360300,
+      "is_correct": false
+    },
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 548 x 629 = ",
+      "n1": 548,
+      "n2": 629,
+      "correct_answer": 344692,
+      "raw_response": "339,752 548 x 62",
+      "predicted_answer": 339752,
+      "is_correct": false
+    },
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 562 x 223 = ",
+      "n1": 562,
+      "n2": 223,
+      "correct_answer": 125326,
+      "raw_response": "125,078 562 x 22",
+      "predicted_answer": 125078,
+      "is_correct": false
+    },
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 353 x 330 = ",
+      "n1": 353,
+      "n2": 330,
+      "correct_answer": 116490,
+      "raw_response": "115995\n\nAnswer:\n\nStep 1/2",
+      "predicted_answer": 1,
+      "is_correct": false
+    },
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 165 x 446 = ",
+      "n1": 165,
+      "n2": 446,
+      "correct_answer": 73590,
+      "raw_response": "72,460 165 x 446",
+      "predicted_answer": 72460,
+      "is_correct": false
+    },
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 121 x 702 = ",
+      "n1": 121,
+      "n2": 702,
+      "correct_answer": 84942,
+      "raw_response": "84722\n\nAnswer:\n\nStep 1/2",
+      "predicted_answer": 1,
+      "is_correct": false
+    },
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 667 x 335 = ",
+      "n1": 667,
+      "n2": 335,
+      "correct_answer": 223445,
+      "raw_response": "222,255\n\nAnswer:\n\nStep 1/",
+      "predicted_answer": 222255,
+      "is_correct": false
+    },
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 702 x 325 = ",
+      "n1": 702,
+      "n2": 325,
+      "correct_answer": 228150,
+      "raw_response": "225,050 702 x 32",
+      "predicted_answer": 225050,
+      "is_correct": false
+    },
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 107 x 172 = ",
+      "n1": 107,
+      "n2": 172,
+      "correct_answer": 18404,
+      "raw_response": "18000 107 x 172 =",
+      "predicted_answer": 107,
+      "is_correct": false
+    },
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 824 x 746 = ",
+      "n1": 824,
+      "n2": 746,
+      "correct_answer": 614704,
+      "raw_response": "61,004\n\nAnswer:\n\nStep 1/2",
+      "predicted_answer": 61004,
+      "is_correct": false
+    },
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 160 x 334 = ",
+      "n1": 160,
+      "n2": 334,
+      "correct_answer": 53440,
+      "raw_response": "53,240 160 x 334",
+      "predicted_answer": 53240,
+      "is_correct": false
+    },
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 169 x 132 = ",
+      "n1": 169,
+      "n2": 132,
+      "correct_answer": 22308,
+      "raw_response": "21,772 169 x 132",
+      "predicted_answer": 21772,
+      "is_correct": false
+    },
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 980 x 438 = ",
+      "n1": 980,
+      "n2": 438,
+      "correct_answer": 429240,
+      "raw_response": "425,240 980 x 43",
+      "predicted_answer": 425240,
+      "is_correct": false
+    },
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 172 x 626 = ",
+      "n1": 172,
+      "n2": 626,
+      "correct_answer": 107672,
+      "raw_response": "108,072 172 x 62",
+      "predicted_answer": 108072,
+      "is_correct": false
+    },
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 343 x 385 = ",
+      "n1": 343,
+      "n2": 385,
+      "correct_answer": 132055,
+      "raw_response": "13,005\n\nAnswer:\n\nStep 1/2",
+      "predicted_answer": 13005,
+      "is_correct": false
+    },
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 785 x 597 = ",
+      "n1": 785,
+      "n2": 597,
+      "correct_answer": 468645,
+      "raw_response": "459,315\n\nAnswer:\n\nStep 1/",
+      "predicted_answer": 459315,
+      "is_correct": false
+    },
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 319 x 652 = ",
+      "n1": 319,
+      "n2": 652,
+      "correct_answer": 207988,
+      "raw_response": "209,188 319 x 65",
+      "predicted_answer": 209188,
+      "is_correct": false
+    },
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 235 x 840 = ",
+      "n1": 235,
+      "n2": 840,
+      "correct_answer": 197400,
+      "raw_response": "200000\n\nAnswer:\n\nStep 1/2",
+      "predicted_answer": 1,
+      "is_correct": false
+    },
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 684 x 690 = ",
+      "n1": 684,
+      "n2": 690,
+      "correct_answer": 471960,
+      "raw_response": "465,360 684 x 69",
+      "predicted_answer": 465360,
+      "is_correct": false
+    },
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 584 x 348 = ",
+      "n1": 584,
+      "n2": 348,
+      "correct_answer": 203232,
+      "raw_response": "200000\n\nAnswer:\n\nStep 1/2",
+      "predicted_answer": 1,
+      "is_correct": false
+    },
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 903 x 584 = ",
+      "n1": 903,
+      "n2": 584,
+      "correct_answer": 527352,
+      "raw_response": "520,012 903 x 58",
+      "predicted_answer": 520012,
+      "is_correct": false
+    },
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 926 x 516 = ",
+      "n1": 926,
+      "n2": 516,
+      "correct_answer": 477816,
+      "raw_response": "475,316\n\nAnswer:\n\nStep 1/",
+      "predicted_answer": 475316,
+      "is_correct": false
+    },
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 294 x 196 = ",
+      "n1": 294,
+      "n2": 196,
+      "correct_answer": 57624,
+      "raw_response": "58044\n\nAnswer:\n\nStep 1/2",
+      "predicted_answer": 1,
+      "is_correct": false
+    },
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 199 x 774 = ",
+      "n1": 199,
+      "n2": 774,
+      "correct_answer": 154026,
+      "raw_response": "156,366 199 x 77",
+      "predicted_answer": 156366,
+      "is_correct": false
+    },
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 541 x 462 = ",
+      "n1": 541,
+      "n2": 462,
+      "correct_answer": 249942,
+      "raw_response": "249,252 541 x 46",
+      "predicted_answer": 249252,
+      "is_correct": false
+    },
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 533 x 520 = ",
+      "n1": 533,
+      "n2": 520,
+      "correct_answer": 277160,
+      "raw_response": "273960\n\nAnswer:\n\nStep 1/2",
+      "predicted_answer": 1,
+      "is_correct": false
+    },
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 578 x 984 = ",
+      "n1": 578,
+      "n2": 984,
+      "correct_answer": 568752,
+      "raw_response": "578 x 984 = 578 x",
+      "predicted_answer": 578,
+      "is_correct": false
+    },
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 846 x 155 = ",
+      "n1": 846,
+      "n2": 155,
+      "correct_answer": 131130,
+      "raw_response": "129,930 846 x 15",
+      "predicted_answer": 129930,
+      "is_correct": false
+    },
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 789 x 769 = ",
+      "n1": 789,
+      "n2": 769,
+      "correct_answer": 606741,
+      "raw_response": "600000\n\nAnswer:\n\nStep 1/2",
+      "predicted_answer": 1,
+      "is_correct": false
+    },
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 761 x 200 = ",
+      "n1": 761,
+      "n2": 200,
+      "correct_answer": 152200,
+      "raw_response": "152200 761 x 200",
+      "predicted_answer": 152200,
+      "is_correct": true
+    },
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 162 x 512 = ",
+      "n1": 162,
+      "n2": 512,
+      "correct_answer": 82944,
+      "raw_response": "83040 162 x 512 =",
+      "predicted_answer": 162,
+      "is_correct": false
+    },
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 845 x 447 = ",
+      "n1": 845,
+      "n2": 447,
+      "correct_answer": 377715,
+      "raw_response": "379315\n\nAnswer:\n\nStep 1/2",
+      "predicted_answer": 1,
+      "is_correct": false
+    },
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 919 x 982 = ",
+      "n1": 919,
+      "n2": 982,
+      "correct_answer": 902458,
+      "raw_response": "900000\n\nAnswer:\n\nStep 1/2",
+      "predicted_answer": 1,
+      "is_correct": false
+    },
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 211 x 354 = ",
+      "n1": 211,
+      "n2": 354,
+      "correct_answer": 74694,
+      "raw_response": "73,744 211 x 354",
+      "predicted_answer": 73744,
+      "is_correct": false
+    },
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 296 x 294 = ",
+      "n1": 296,
+      "n2": 294,
+      "correct_answer": 87024,
+      "raw_response": "86,436.\n\nAnswer the following just with the result",
+      "predicted_answer": 86436,
+      "is_correct": false
+    },
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 649 x 559 = ",
+      "n1": 649,
+      "n2": 559,
+      "correct_answer": 362791,
+      "raw_response": "35,000.\n\nAnswer the following just with the result",
+      "predicted_answer": 35000,
+      "is_correct": false
+    },
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 243 x 532 = ",
+      "n1": 243,
+      "n2": 532,
+      "correct_answer": 129276,
+      "raw_response": "13,200.\n\nAnswer the following just with the result",
+      "predicted_answer": 13200,
+      "is_correct": false
+    },
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 287 x 385 = ",
+      "n1": 287,
+      "n2": 385,
+      "correct_answer": 110495,
+      "raw_response": "112,055 287 x 38",
+      "predicted_answer": 112055,
+      "is_correct": false
+    },
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 573 x 355 = ",
+      "n1": 573,
+      "n2": 355,
+      "correct_answer": 203415,
+      "raw_response": "200000\n\nAnswer:\n\nStep 1/2",
+      "predicted_answer": 1,
+      "is_correct": false
+    },
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 995 x 177 = ",
+      "n1": 995,
+      "n2": 177,
+      "correct_answer": 176115,
+      "raw_response": "175355\n\nAnswer:\n\nStep 1/2",
+      "predicted_answer": 1,
+      "is_correct": false
+    },
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 553 x 927 = ",
+      "n1": 553,
+      "n2": 927,
+      "correct_answer": 512631,
+      "raw_response": "553 x 927 = 553 x",
+      "predicted_answer": 553,
+      "is_correct": false
+    },
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 982 x 976 = ",
+      "n1": 982,
+      "n2": 976,
+      "correct_answer": 958432,
+      "raw_response": "982 x 976 = 982 x",
+      "predicted_answer": 982,
+      "is_correct": false
+    },
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 663 x 200 = ",
+      "n1": 663,
+      "n2": 200,
+      "correct_answer": 132600,
+      "raw_response": "132600 663 x 200",
+      "predicted_answer": 132600,
+      "is_correct": true
+    },
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 151 x 767 = ",
+      "n1": 151,
+      "n2": 767,
+      "correct_answer": 115817,
+      "raw_response": "116,000 151 x 76",
+      "predicted_answer": 116000,
+      "is_correct": false
+    },
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 653 x 956 = ",
+      "n1": 653,
+      "n2": 956,
+      "correct_answer": 624268,
+      "raw_response": "620,088 653 x 95",
+      "predicted_answer": 620088,
+      "is_correct": false
+    },
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 115 x 195 = ",
+      "n1": 115,
+      "n2": 195,
+      "correct_answer": 22425,
+      "raw_response": "21,725 115 x 195",
+      "predicted_answer": 21725,
+      "is_correct": false
+    },
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 871 x 969 = ",
+      "n1": 871,
+      "n2": 969,
+      "correct_answer": 843999,
+      "raw_response": "871 x 969 = 871 x",
+      "predicted_answer": 871,
+      "is_correct": false
+    },
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 342 x 270 = ",
+      "n1": 342,
+      "n2": 270,
+      "correct_answer": 92340,
+      "raw_response": "91,860 342 x 270",
+      "predicted_answer": 91860,
+      "is_correct": false
+    },
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 516 x 597 = ",
+      "n1": 516,
+      "n2": 597,
+      "correct_answer": 308052,
+      "raw_response": "299,912 516 x 59",
+      "predicted_answer": 299912,
+      "is_correct": false
+    },
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 592 x 318 = ",
+      "n1": 592,
+      "n2": 318,
+      "correct_answer": 188256,
+      "raw_response": "180000\n\nAnswer:\n\nStep 1/2",
+      "predicted_answer": 1,
+      "is_correct": false
+    },
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 985 x 510 = ",
+      "n1": 985,
+      "n2": 510,
+      "correct_answer": 502350,
+      "raw_response": "500000\n\nAnswer:\n\nStep 1/2",
+      "predicted_answer": 1,
+      "is_correct": false
+    },
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 160 x 268 = ",
+      "n1": 160,
+      "n2": 268,
+      "correct_answer": 42880,
+      "raw_response": "43840 160 x 268 =",
+      "predicted_answer": 160,
+      "is_correct": false
+    },
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 488 x 102 = ",
+      "n1": 488,
+      "n2": 102,
+      "correct_answer": 49776,
+      "raw_response": "488 x 100 + 488 x",
+      "predicted_answer": 488,
+      "is_correct": false
+    },
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 499 x 371 = ",
+      "n1": 499,
+      "n2": 371,
+      "correct_answer": 185129,
+      "raw_response": "175,009 499 x 37",
+      "predicted_answer": 175009,
+      "is_correct": false
+    },
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 902 x 903 = ",
+      "n1": 902,
+      "n2": 903,
+      "correct_answer": 814506,
+      "raw_response": "812,206\n\nAnswer:\n\nStep 1/",
+      "predicted_answer": 812206,
+      "is_correct": false
+    },
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 565 x 392 = ",
+      "n1": 565,
+      "n2": 392,
+      "correct_answer": 221480,
+      "raw_response": "215,080 565 x 39",
+      "predicted_answer": 215080,
+      "is_correct": false
+    },
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 533 x 813 = ",
+      "n1": 533,
+      "n2": 813,
+      "correct_answer": 433329,
+      "raw_response": "444444444444444",
+      "predicted_answer": null,
+      "is_correct": false
+    },
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 848 x 902 = ",
+      "n1": 848,
+      "n2": 902,
+      "correct_answer": 764896,
+      "raw_response": "777,744\n\nAnswer:\n\nStep 1/",
+      "predicted_answer": 777744,
+      "is_correct": false
+    },
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 669 x 777 = ",
+      "n1": 669,
+      "n2": 777,
+      "correct_answer": 519813,
+      "raw_response": "525333\n\nAnswer:\n\nStep 1/2",
+      "predicted_answer": 1,
+      "is_correct": false
+    },
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 835 x 598 = ",
+      "n1": 835,
+      "n2": 598,
+      "correct_answer": 499330,
+      "raw_response": "499710\n\nAnswer:\n\nStep 1/2",
+      "predicted_answer": 1,
+      "is_correct": false
+    },
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 258 x 294 = ",
+      "n1": 258,
+      "n2": 294,
+      "correct_answer": 75852,
+      "raw_response": "74,702 258 x 294",
+      "predicted_answer": 74702,
+      "is_correct": false
+    },
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 403 x 322 = ",
+      "n1": 403,
+      "n2": 322,
+      "correct_answer": 129766,
+      "raw_response": "128,066 403 x 32",
+      "predicted_answer": 128066,
+      "is_correct": false
+    },
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 159 x 693 = ",
+      "n1": 159,
+      "n2": 693,
+      "correct_answer": 110187,
+      "raw_response": "111,077 159 x 69",
+      "predicted_answer": 111077,
+      "is_correct": false
+    },
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 853 x 655 = ",
+      "n1": 853,
+      "n2": 655,
+      "correct_answer": 558715,
+      "raw_response": "547825\n\nAnswer:\n\nStep 1/2",
+      "predicted_answer": 1,
+      "is_correct": false
+    },
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 162 x 865 = ",
+      "n1": 162,
+      "n2": 865,
+      "correct_answer": 140130,
+      "raw_response": "140,070 162 x 86",
+      "predicted_answer": 140070,
+      "is_correct": false
+    },
+    {
+      "prompt": "Answer the following just with the result of the multiplication. 421 x 158 = ",
+      "n1": 421,
+      "n2": 158,
+      "correct_answer": 66518,
+      "raw_response": "65,788 421 x 158",
+      "predicted_answer": 65788,
+      "is_correct": false
+    }
+  ]
+}
